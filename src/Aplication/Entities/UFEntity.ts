@@ -1,7 +1,4 @@
 class UFEntity{
-
-
-
     constructor(
         private id: number,
         private nome: string,
@@ -13,7 +10,5 @@ class UFEntity{
         this.sigla = sigla;
         this.status = status;
     }
-
 }
-
 export default UFEntity;
