@@ -3,12 +3,13 @@ import { CreateUFSchema } from "./CreateUF.schema";
 import CreateUFService from "./CreateUF.service";
 
 class CreateUFController{
+
+    constructor(private createUFService: CreateUFService){}
+
     async handle (request: Request, response: Response){
         const UF = CreateUFSchema.parse(request.body);
 
-        // CreateUFService.execute(UF)
-        return response.status(201).json(UF);
-        
+        response.status(200).send(await this.createUFService.execute(UF));
     }
 
 }
