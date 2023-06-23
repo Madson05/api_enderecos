@@ -6,9 +6,10 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
 app.use("/", router);
 
 app.listen(process.env.APLICATION_PORT, () => {
-    console.log(`Server is running on port ${process.env.APLICATION_PORT}`);
+    console.log(`O servidor está rodando no endereço: https://localhost:${process.env.APLICATION_PORT}`);
     }
 );
