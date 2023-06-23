@@ -6,8 +6,8 @@ class UFEntity{
         private status: number
     ){
         this.codigoUF = codigoUF;
-        this.nome = nome;
         this.sigla = sigla;
+        this.nome = nome;
         this.status = status;
     }
 
