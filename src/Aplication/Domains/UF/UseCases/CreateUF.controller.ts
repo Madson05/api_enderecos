@@ -9,7 +9,6 @@ class CreateUFController{
         // CreateUFService.execute(UF)
         return response.status(201).json(UF);
         
-
     }
 
 }
