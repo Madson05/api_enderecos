@@ -10,4 +10,4 @@ class CreateUFService {
     }
 }
 
-export default new CreateUFService();
+export default CreateUFService;

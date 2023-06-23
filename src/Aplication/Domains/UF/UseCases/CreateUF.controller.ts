@@ -6,7 +6,7 @@ class CreateUFController{
     async handle (request: Request, response: Response){
         const UF = CreateUFSchema.parse(request.body);
 
-        CreateUFService.execute(UF)
+        // CreateUFService.execute(UF)
         return response.status(201).json(UF);
         
 
