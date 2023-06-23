@@ -2,10 +2,11 @@ import UFEntity from "../../../Entities/UFEntity";
 import { CreateUFType } from "./CreateUF.schema";
 
 class CreateUFService {
-    async execute(UF: CreateUFType): Promise<UFEntity> {
-        const newUF = new UFEntity(1, UF.nome, UF.sigla, UF.status);
 
-        return newUF;
+    async execute(UFDto: CreateUFType): Promise<UFEntity> {
+        const UF = new UFEntity(1, UFDto.nome, UFDto.sigla, UFDto.status);
+
+        return UF;
     }
 }
 

@@ -14,3 +14,5 @@ class UFRepository {
         return result;
     }
 }
+
+export default UFRepository;
