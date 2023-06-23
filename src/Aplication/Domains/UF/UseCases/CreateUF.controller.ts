@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CreateUFSchema } from "./CreateUF.schema";
 import CreateUFService from "./CreateUF.service";
 
-class createUFController{
+class CreateUFController{
     async handle (request: Request, response: Response){
         const UF = CreateUFSchema.parse(request.body);
 
@@ -14,4 +14,4 @@ class createUFController{
 
 }
 
-export default new createUFController();
+export default CreateUFController;
