@@ -5,12 +5,15 @@ class UFRepository {
     async create(UF: UFEntity) {
         const connection = await getConnection();
         const sql = `INSERT INTO TB_UF (codigo_UF, sigla, nome, status) VALUES (:codigoUF, :sigla, :nome, :status)`;
-        const result = connection.execute(sql, {
+        const result = await connection.execute(sql, 
+            {
             codigoUF: UF.getCodigoUF(),
             sigla: UF.getSigla(),
             nome: UF.getNome(),
             status: UF.getStatus()
-          });
+          }
+          );
+        await connection.commit();
         return result;
     }
 }
