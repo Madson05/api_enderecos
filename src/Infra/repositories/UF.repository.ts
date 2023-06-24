@@ -23,6 +23,23 @@ class UFRepository {
       }
     }
   }
+
+  async get(query: string){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_UF WHERE ${query}`;
+      const result = await connection.execute(sql);
+      await connection.commit();
+      return result;
+    }catch(error){
+      throw new Error("Não foi possivel buscar a(s) UF(s)");
+    }finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default UFRepository;
