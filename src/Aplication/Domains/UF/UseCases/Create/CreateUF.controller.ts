@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateUFSchema } from "./CreateUF.schema";
+import { CreateUFSchema } from "./Schemas/CreateUF.schema";
 import CreateUFService from "./CreateUF.service";
 
 class CreateUFController{

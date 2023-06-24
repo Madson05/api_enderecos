@@ -1,7 +1,7 @@
-import UFRepository from "../../../../Infra/repositories/UF.repository";
-import getNextSequence from "../../../../Infra/repositories/getNextSequence";
-import UFEntity from "../../../Entities/UFEntity";
-import { CreateUFType } from "./CreateUF.schema";
+import UFRepository from "../../../../../Infra/repositories/UF.repository";
+import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
+import UFEntity from "../../../../Entities/UFEntity";
+import { CreateUFType } from "./Schemas/CreateUF.schema";
 
 class CreateUFService {
 
