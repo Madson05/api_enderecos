@@ -25,6 +25,4 @@ async function getNextSequence(sequenceName: string): Promise<number> {
   }
 }
 
-getNextSequence("SEQUENCE_UF")
-
 export default getNextSequence;
