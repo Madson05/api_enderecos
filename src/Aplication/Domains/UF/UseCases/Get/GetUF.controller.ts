@@ -14,3 +14,5 @@ class GetUFController{
   }
 
 }
+
+export default GetUFController;
