@@ -1,3 +1,4 @@
+import { GetUFType } from "../../Aplication/Domains/UF/UseCases/Get/schemas/getUF.schema";
 import UFEntity from "../../Aplication/Entities/UFEntity";
 import getConnection from "../database/connectionDB";
 
@@ -24,7 +25,7 @@ class UFRepository {
     }
   }
 
-  async get(query: string){
+  async get(query: GetUFType){
     let connection;
     try{
       connection = await getConnection();
