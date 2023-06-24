@@ -1,7 +1,7 @@
 import UFRepository from "../../../../../Infra/repositories/UF.repository";
 import { GetUFType } from "./schemas/getUF.schema";
 
-class GetUFFactory {
+class GetUFService {
   constructor(private readonly ufRepository: UFRepository) {}
 
   async execute(query: GetUFType): Promise<any> {
@@ -9,4 +9,4 @@ class GetUFFactory {
   }
 }
 
-export default GetUFFactory;
+export default GetUFService;
