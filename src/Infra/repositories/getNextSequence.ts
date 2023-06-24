@@ -1,8 +1,6 @@
 import oracledb from 'oracledb';
 import dbConfig from '../database/dbConfig';
 
-
-
 async function getNextSequence(sequenceName: string): Promise<number> {
   let connection;
   try {
@@ -18,7 +16,6 @@ async function getNextSequence(sequenceName: string): Promise<number> {
     throw new Error("Não foi possivel gerar a sequence");
 
   } catch (error) {
-    console.log(error);
     throw new Error("Não foi possivel gerar a sequence");
 
   } finally {
