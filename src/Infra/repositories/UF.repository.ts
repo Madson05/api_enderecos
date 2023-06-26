@@ -39,6 +39,28 @@ class UFRepository {
       }
     }
   }
+
+  async update(UF: UFEntity){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `UPDATE TB_UF SET sigla = :sigla, nome = :nome, status = :status WHERE codigo_UF = :codigoUF`;
+      const result = await connection.execute(sql, {
+        codigoUF: UF.getCodigoUF(),
+        sigla: UF.getSigla(),
+        nome: UF.getNome(),
+        status: UF.getStatus(),
+      });
+      await connection.commit();
+      return result;
+    }catch(error){
+      throw new Error("Não foi possivel atualizar a UF");
+    }finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default UFRepository;
