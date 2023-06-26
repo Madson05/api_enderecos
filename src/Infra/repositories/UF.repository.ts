@@ -1,3 +1,4 @@
+import { UpdateUFType } from "../../Aplication/Domains/UF/UseCases/Update/schemas/UpdateUF.shema";
 import UFEntity from "../../Aplication/Entities/UFEntity";
 import getConnection from "../database/connectionDB";
 
@@ -40,16 +41,16 @@ class UFRepository {
     }
   }
 
-  async update(UF: UFEntity){
+  async update(UF: UpdateUFType){
     let connection;
     try{
       connection = await getConnection();
       const sql = `UPDATE TB_UF SET sigla = :sigla, nome = :nome, status = :status WHERE codigo_UF = :codigoUF`;
       const result = await connection.execute(sql, {
-        codigoUF: UF.getCodigoUF(),
-        sigla: UF.getSigla(),
-        nome: UF.getNome(),
-        status: UF.getStatus(),
+        codigoUF: UF.codigo_UF,
+        sigla: UF.sigla,
+        nome: UF.nome,
+        status: UF.status,
       });
       await connection.commit();
       return result;
