@@ -1,4 +1,3 @@
-import { GetUFType } from "../../Aplication/Domains/UF/UseCases/Get/schemas/getUF.schema";
 import UFEntity from "../../Aplication/Entities/UFEntity";
 import getConnection from "../database/connectionDB";
 
@@ -25,16 +24,15 @@ class UFRepository {
     }
   }
 
-  async get(query: GetUFType){
+  async get(query: string){
     let connection;
     try{
       connection = await getConnection();
       const sql = `SELECT * FROM TB_UF WHERE ${query}`;
       const result = await connection.execute(sql);
       await connection.commit();
-      return result;
-    }catch(error){
-      throw new Error("Não foi possivel buscar a(s) UF(s)");
+      return result.rows;
+    
     }finally{
       if(connection){
         await connection.close();
