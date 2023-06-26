@@ -1,5 +1,4 @@
 import { Router } from "express";
-import CreateUFController from "../Domains/UF/UseCases/Create/CreateUF.controller";
 import { createUFController } from "../Domains/UF/UseCases/Create/CreateUF.factory";
 import { getUFController } from "../Domains/UF/UseCases/Get/GetUF.factory";
 
