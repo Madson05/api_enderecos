@@ -8,7 +8,7 @@ class GetUFController {
 
   handle = async (request: Request, response: Response): Promise<any> => {
     let UF: GetUFType = request.query;
-    UF.codigoUF = Number(UF.codigoUF);
+    UF.codigo_UF = Number(UF.codigo_UF);
 
     const data: GetUFType = GetUFSchema.parse(request.query);
 

@@ -1,18 +1,18 @@
 class UFEntity{
     constructor(
-        private codigoUF: number,
+        private codigo_UF: number,
         private sigla: string,
         private nome: string,
         private status: number
     ){
-        this.codigoUF = codigoUF;
+        this.codigo_UF = codigo_UF;
         this.sigla = sigla;
         this.nome = nome;
         this.status = status;
     }
 
     public getCodigoUF(): number{
-        return this.codigoUF;
+        return this.codigo_UF;
     }
 
     public getSigla(): string{
