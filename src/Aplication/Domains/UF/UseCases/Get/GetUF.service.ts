@@ -14,6 +14,9 @@ class GetUFService {
     for (const item in data) {
       if (data.hasOwnProperty(item)) {
         if (item !== undefined) {
+          if (query !== "") {
+            query += " AND ";
+          }
           query += `${item}='${data[item]}'`;
         }
       }
