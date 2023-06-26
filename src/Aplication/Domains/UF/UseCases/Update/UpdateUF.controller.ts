@@ -12,3 +12,5 @@ class UpdateUFController{
     response.status(200).send(await this.updateUFService.execute(UF));
   }
 }
+
+export default UpdateUFController;
