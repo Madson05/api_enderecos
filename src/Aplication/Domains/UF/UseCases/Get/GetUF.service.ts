@@ -4,8 +4,9 @@ import { GetUFType } from "./schemas/getUF.schema";
 class GetUFService {
   constructor(private readonly ufRepository: UFRepository) {}
 
-  async execute(query: GetUFType): Promise<any> {
-    return this.ufRepository.get(query);
+  async execute(data: GetUFType): Promise<any> {
+
+    return this.ufRepository.get(data);
   }
 }
 

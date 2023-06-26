@@ -7,9 +7,9 @@ class GetUFController{
   constructor(private readonly getUFService: GetUFService) {}
 
   handle = async (request: Request, response: Response): Promise<any> => {
-    const query: GetUFType = GetUFSchema.parse(request.query);
+    const data: GetUFType = GetUFSchema.parse(request.query);
 
-    response.status(200).send(await this.getUFService.execute(query));
+    response.status(200).send(await this.getUFService.execute(data));
     
   }
 
