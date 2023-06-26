@@ -6,7 +6,7 @@ import { GetUFSchema, GetUFType } from "./schemas/getUF.schema";
 class GetUFController{
   constructor(private readonly getUFService: GetUFService) {}
 
-  async handle(request: Request, response: Response): Promise<any> {
+  handle = async (request: Request, response: Response): Promise<any> => {
     const query: GetUFType = GetUFSchema.parse(request.query);
 
     response.status(200).send(await this.getUFService.execute(query));
