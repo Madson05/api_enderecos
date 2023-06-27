@@ -9,7 +9,7 @@ async function getNextSequence(sequenceName: string): Promise<number> {
     const result = await connection.execute(sql);
     
     if (result.rows !== undefined) {
-      const nextValue: number[] = result.rows[0] as number[];
+      const nextValue = result.rows[0] as number[];
       return nextValue[0] as number;
     }
 
