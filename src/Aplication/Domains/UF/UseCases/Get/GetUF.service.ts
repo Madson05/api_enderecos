@@ -1,5 +1,6 @@
 import UFRepository from "../../../../../Infra/repositories/UF.repository";
 import UFEntity from "../../../../Entities/UFEntity";
+import { refactorResult } from "../../Utils/RefactorResult";
 import { GetUFType } from "./schemas/getUF.schema";
 
 type GetUFServiceType = GetUFType & {
@@ -24,6 +25,7 @@ class GetUFService {
     }
 
     const result = await this.ufRepository.get(query);
+    return refactorResult(result, data)
 
     
 
