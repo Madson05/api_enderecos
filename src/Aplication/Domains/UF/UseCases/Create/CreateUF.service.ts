@@ -1,6 +1,7 @@
 import UFRepository from "../../../../../Infra/repositories/UF.repository";
 import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import UFEntity from "../../../../Entities/UFEntity";
+import { refactorResult } from "../../Utils/RefactorResult";
 import { CreateUFType } from "./Schemas/CreateUF.schema";
 
 class CreateUFService {
@@ -10,7 +11,8 @@ class CreateUFService {
     async execute(UFDto: CreateUFType): Promise<any> {
         const UF = new UFEntity(await getNextSequence("SEQUENCE_UF"), UFDto.sigla, UFDto.nome, UFDto.status);
 
-        return this.uFRepository.create(UF);
+        const result = await this.uFRepository.create(UF);
+        return refactorResult(result);
         
     }
 }
