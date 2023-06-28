@@ -53,13 +53,14 @@ class UFRepository {
     try{
       connection = await getConnection();
       const sql = `UPDATE TB_UF SET sigla = :sigla, nome = :nome, status = :status WHERE codigo_UF = :codigoUF`;
-      const result = await connection.execute(sql, {
+      await connection.execute(sql, {
         codigoUF: UF.codigo_UF,
         sigla: UF.sigla,
         nome: UF.nome,
         status: UF.status,
       });
       await connection.commit();
+      const result = await this.get("");
       return result;
     }catch(error){
       throw new Error("Não foi possivel atualizar a UF");
