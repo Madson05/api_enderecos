@@ -35,3 +35,5 @@ class MunicipioEntity{
     this.status = status;
   }
 }
+
+export default MunicipioEntity;
