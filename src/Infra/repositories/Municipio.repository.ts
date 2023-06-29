@@ -38,6 +38,22 @@ class MunicipioRepository{
       }
     }
   }
+
+  async update(municipio: MunicipioEntity){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `UPDATE TB_MUNICIPIO SET CODIGO_UF = :codigo_uf, NOME = :nome, status = :status WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      const result = await connection.execute(sql, [municipio.getCodigoUF(), municipio.getNome(), municipio.getStatus(), municipio.getCodigoMunicipio()]);
+      await connection.commit();
+      return await this.get("")
+    
+    }finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default MunicipioRepository;
