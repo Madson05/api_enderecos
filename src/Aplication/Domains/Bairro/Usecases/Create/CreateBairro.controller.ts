@@ -14,3 +14,5 @@ class CreateBairroController{
 
   }
 }
+
+export default CreateBairroController;
