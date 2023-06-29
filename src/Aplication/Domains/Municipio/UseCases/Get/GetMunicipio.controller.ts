@@ -12,3 +12,6 @@ class GetMunicipioController {
   }
 
 }
+
+
+export default GetMunicipioController;
