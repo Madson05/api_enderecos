@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import UpdateMunicipioService from "./UpdateMunicipio.service";
 import { UpdateMunicipioSchema } from "./schemas/UpdateMunicipio.schema";
 
@@ -9,7 +9,7 @@ class UpdateMunicipioController{
 
     const municipio = UpdateMunicipioSchema.parse(request.body);
 
-    return await this.updateMunicipioService.execute(municipio);
+    response.send(await this.updateMunicipioService.execute(municipio));
   }
 }
 
