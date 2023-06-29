@@ -6,4 +6,4 @@ export const CreateBairroSchema = zod.object({
   status: zod.number().min(1).max(1),
 });
 
-export type GetBairroType = zod.infer<typeof CreateBairroSchema>;
+export type CreateBairroType = zod.infer<typeof CreateBairroSchema>;
