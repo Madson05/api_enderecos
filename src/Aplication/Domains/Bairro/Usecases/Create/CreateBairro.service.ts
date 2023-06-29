@@ -16,3 +16,5 @@ class CreateBairroService {
     return refactorResult(result);
   }
 }
+
+export default CreateBairroService;
