@@ -23,10 +23,10 @@ class GetBairroService{
           query += `${item}='${data[item]}'`;
         }
       }
-
-      const result = await this.bairroRepository.get(query);
-      return refactorResult(result, data);
     }
+
+    const result = await this.bairroRepository.get(query);
+    return refactorResult(result, data);
 
 
     
