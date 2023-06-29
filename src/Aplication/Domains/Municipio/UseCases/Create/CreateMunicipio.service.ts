@@ -13,3 +13,5 @@ class CreateMunicipioService {
     return refactorResult(resultSet);
   }
 }
+
+export default CreateMunicipioService;
