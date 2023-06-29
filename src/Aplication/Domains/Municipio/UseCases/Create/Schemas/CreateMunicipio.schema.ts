@@ -1,9 +1,6 @@
 import zod from "zod";
 
 export const CreateMunicipioSchema = zod.object({
-  codigo_municipio: zod
-    .number()
-    .min(1, "O codigo do municipio deve ser maior que 0"),
   codigo_UF: zod
     .number()
     .min(1, "O codigo da UF deve ser maior que 0"),
