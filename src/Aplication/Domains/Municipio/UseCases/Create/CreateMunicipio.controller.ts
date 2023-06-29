@@ -11,3 +11,5 @@ class CreateMunicipioController{
     response.status(200).send(await this.createMunicipioService.execute(data));
   }
 }
+
+export default CreateMunicipioController
