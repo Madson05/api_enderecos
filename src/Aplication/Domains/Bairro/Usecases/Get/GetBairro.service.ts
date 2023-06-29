@@ -11,9 +11,11 @@ class GetBairroService{
 
   async execute(data: GetBairroTypeService): Promise<any> {
     let query = "";
-
+    
     for (const item in data) {
+      
       if (data.hasOwnProperty(item)) {
+        console.log("pi")
         if (item !== undefined) {
           if (query !== "") {
             query += " AND ";
@@ -25,6 +27,9 @@ class GetBairroService{
       const result = await this.bairroRepository.get(query);
       return refactorResult(result, data);
     }
+
+
+    
   }
 
 }

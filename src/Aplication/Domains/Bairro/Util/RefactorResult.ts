@@ -7,7 +7,6 @@ export const refactorResult = (result: any, data?: GetBairroType | undefined) =>
     if( data && (data.codigo_bairro !== undefined)){
       const dataBairro = result[0] as unknown[];
       const Bairro = new BairroEntity(Number(dataBairro[0]), Number(dataBairro[1]), String(dataBairro[2]), Number(dataBairro[3]));
-
       return Bairro;
 
     }else{
@@ -17,8 +16,7 @@ export const refactorResult = (result: any, data?: GetBairroType | undefined) =>
         result[item] = Bairro;
       }
     }
-
-    return result;
+    return [];
   }
-  return result;
+  return [];
 }

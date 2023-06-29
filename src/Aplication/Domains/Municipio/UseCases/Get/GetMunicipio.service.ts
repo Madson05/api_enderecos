@@ -25,7 +25,7 @@ export class GetMunicipioService {
       }
     }
     const result = await this.municipioRepository.get(query);
-    console.log(result)
+    // console.log(result)
     return refactorResult(result, data);
     
   }

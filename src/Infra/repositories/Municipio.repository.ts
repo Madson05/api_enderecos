@@ -10,8 +10,7 @@ class MunicipioRepository{
         const result = await connection.execute(`SELECT * FROM TB_MUNICIPIO`);
         return result.rows;
       }
-      
-      const sql = `SELECT * FROM TB_MUNCIPIO WHERE ${query}`;
+      const sql = `SELECT * FROM TB_MUNICIPIO WHERE ${query}`;
       const result = await connection.execute(sql);
       await connection.commit();
       return result.rows;
