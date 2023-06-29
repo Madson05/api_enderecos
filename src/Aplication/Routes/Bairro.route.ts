@@ -4,3 +4,5 @@ import { getBairroController } from "../Domains/Bairro/Usecases/Get/GetBairro.fa
 const routerBairro = Router();
 
 routerBairro.get("/", getBairroController.handle);
+
+export default routerBairro;
