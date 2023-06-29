@@ -27,7 +27,7 @@ class MunicipioRepository{
     let connection;
     try{
       connection = await getConnection();
-      const sql = `INSERT INTO TB_MUNICIPIO (CODIGO_UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, status) VALUES (:codigo_uf, :codigo_municipio, :nome_municipio, :status)`;
+      const sql = `INSERT INTO TB_MUNICIPIO (CODIGO_UF, CODIGO_MUNICIPIO, NOME, status) VALUES (:codigo_uf, :codigo_municipio, :nome, :status)`;
       const result = await connection.execute(sql, [municipio.getCodigoUF(), municipio.getCodigoMunicipio(), municipio.getNome(), municipio.getStatus()]);
       await connection.commit();
       return await this.get("")
