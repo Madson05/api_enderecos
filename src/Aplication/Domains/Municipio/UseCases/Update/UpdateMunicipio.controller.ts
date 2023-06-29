@@ -5,7 +5,7 @@ import { UpdateMunicipioSchema } from "./schemas/UpdateMunicipio.schema";
 class UpdateMunicipioController{
   constructor(private readonly updateMunicipioService: UpdateMunicipioService) {}
 
-  async handle(request: Request, response: Response): Promise<any> {
+  handle = async (request: Request, response: Response): Promise<any> => {
 
     const municipio = UpdateMunicipioSchema.parse(request.body);
 
