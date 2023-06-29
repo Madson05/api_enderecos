@@ -35,3 +35,5 @@ class BairroEntity {
     this.status = status;
   }
 }
+
+export default BairroEntity;
