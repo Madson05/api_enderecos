@@ -5,10 +5,10 @@ import { getMunicipioSchema } from "./Schemas/GetMunicipio.schema";
 class GetMunicipioController {
   constructor(private getMunicipioService: GetMunicipioService) {}
 
-  public async handle(request: Request, response: Response) {
+  handle = async (request: Request, response: Response) => {
     const municipio = getMunicipioSchema.parse(request.query);
 
-    const result = await this.getMunicipioService.execute(municipio);
+    response.send(await this.getMunicipioService.execute(municipio));
   }
 
 }

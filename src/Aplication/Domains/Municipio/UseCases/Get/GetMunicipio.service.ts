@@ -1,4 +1,5 @@
 import MunicipioRepository from "../../../../../Infra/repositories/Municipio.repository";
+import { refactorResult } from "../../Utils/RefactorResult";
 import { GetMunicipioType } from "./Schemas/GetMunicipio.schema";
 
 
@@ -24,6 +25,8 @@ export class GetMunicipioService {
       }
     }
     const result = await this.municipioRepository.get(query);
+    console.log(result)
+    return refactorResult(result, data);
     
   }
 }
