@@ -1,4 +1,4 @@
-import {Request, Response, Router} from "express"
+import {Router} from "express"
 import routerUF from "./UF.route";
 import routerMunicipio from "./Municipio.route";
 import routerBairro from "./Bairro.route";
