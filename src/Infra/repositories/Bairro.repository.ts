@@ -22,3 +22,5 @@ class BairroRepository{
     }
   }
 }
+
+export default BairroRepository;
