@@ -1,4 +1,3 @@
-import BairroEntity from "../../Aplication/Entities/BairroEntity";
 import getConnection from "../database/connectionDB";
 
 class BairroRepository{
