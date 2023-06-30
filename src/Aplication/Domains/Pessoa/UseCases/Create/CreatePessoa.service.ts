@@ -20,3 +20,5 @@ class CreatePessoaService{
         return result;
     }
 }
+
+export default CreatePessoaService;
