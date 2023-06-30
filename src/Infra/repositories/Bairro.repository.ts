@@ -43,6 +43,29 @@ class BairroRepository {
       }
     }
   }
+
+  async update(bairro: BairroEntity) {
+    let connection;
+    try {
+      connection = await getConnection();
+      
+      const sql = `UPDATE TB_BAIRRO SET CODIGO_MUNICIPIO = :codigo_municipio, NOME = :nome, status = :status WHERE CODIGO_BAIRRO = :codigo_bairro`;
+      await connection.execute(sql, [
+        bairro.getCodigoMunicipio(),
+        bairro.getNome(),
+        bairro.getStatus(),
+        bairro.getCodigoBairro(),
+      ]);
+      await connection.commit();
+      return await this.get("");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      if (connection) {
+        connection.close();
+      }
+    }
+  }
 }
 
 export default BairroRepository;
