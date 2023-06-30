@@ -1,14 +1,14 @@
-import MunicipioRepository from "../../../Infra/repositories/Municipio.repository";
-import { GetMunicipioType } from "../Municipio/UseCases/Get/Schemas/GetMunicipio.schema";
+import PessoaRepository from "../../../Infra/repositories/Pessoa.repository";
+import { GetPessoaType } from "../Pessoa/UseCases/Get/Schemas/GetPessoa.schema";
 
-type GetMunicipioServiceType = GetMunicipioType & {
+type GetPessoaServiceType = GetPessoaType & {
   [key: string]: number | string | undefined;
 }
 
-class GetMunicipioService {
-  constructor(private readonly municipioRepository: MunicipioRepository) {}
+class GetPessoaService {
+  constructor(private readonly pessoaRepository: PessoaRepository) {}
 
-  async execute(data: GetMunicipioServiceType): Promise<any> {
+  async execute(data: GetPessoaServiceType): Promise<any> {
     let query = "";
 
     for (const item in data) {
@@ -22,7 +22,7 @@ class GetMunicipioService {
       }
     }
 
-    const result = await this.municipioRepository.get(query);
+    const result = await this.pessoaRepository.get(query);
     return result;
 
     
@@ -32,4 +32,4 @@ class GetMunicipioService {
   
 }
 
-export default GetMunicipioService;
+export default GetPessoaService;
