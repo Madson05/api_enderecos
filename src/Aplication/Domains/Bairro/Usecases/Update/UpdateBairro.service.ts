@@ -3,7 +3,7 @@ import BairroEntity from "../../../../Entities/BairroEntity";
 import { refactorResult } from "../../Util/RefactorResult";
 import { UpdateBairroSchema, UpdateBairroType } from "./Schemas/UpdateBairro.schema";
 
-class UpdatebairroService{
+class UpdateBairroService{
   constructor(private readonly bairroRepository: BairroRepository) {}
 
   async execute(data: UpdateBairroType): Promise<any> {
@@ -14,3 +14,5 @@ class UpdatebairroService{
     return refactorResult(resultSet);
   }
 }
+
+export default UpdateBairroService;
