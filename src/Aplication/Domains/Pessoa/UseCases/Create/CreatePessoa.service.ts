@@ -2,7 +2,7 @@ import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repositor
 import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
-import { CreateUsuarioType, createUsuarioSchema } from "./Schemas/CreatePessoa.schema";
+import { CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
 
 class CreatePessoaService{
     constructor(
