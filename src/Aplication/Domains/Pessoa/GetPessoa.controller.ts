@@ -11,3 +11,5 @@ class GetPessoaController{
     return response.status(200).json(result);
   }
 }
+
+export default GetPessoaController;
