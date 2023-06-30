@@ -1,6 +1,6 @@
 import zod from "zod";
 
-const enderecoSchema = zod.object({
+const createEnderecoSchema = zod.object({
   codigoBairro: zod.number(),
   nomeRua: zod.string(),
   numero: zod.string(),
@@ -8,14 +8,14 @@ const enderecoSchema = zod.object({
   cep: zod.string().regex(/^\d{5}-\d{3}$/),
 });
 
-export const usuarioSchema = zod.object({
+export const createUsuarioSchema = zod.object({
   nome: zod.string(),
   sobrenome: zod.string(),
   idade: zod.number(),
   login: zod.string(),
   senha: zod.string(),
   status: zod.number(),
-  enderecos: zod.array(enderecoSchema),
+  enderecos: zod.array(createEnderecoSchema),
 });
 
-export type UsuarioType = zod.infer<typeof usuarioSchema>;
+export type CreateUsuarioType = zod.infer<typeof createUsuarioSchema>;

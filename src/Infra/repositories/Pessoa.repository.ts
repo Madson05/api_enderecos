@@ -1,3 +1,5 @@
+import EnderecoEntity from "../../Aplication/Entities/EnderecoEntity";
+import PessoaEntity from "../../Aplication/Entities/PessoaEntity";
 import getConnection from "../database/connectionDB";
 
 class PessoaRepository {
@@ -80,6 +82,56 @@ GROUP BY
     } finally {
       if (connection) {
         connection.close();
+      }
+    }
+  }
+
+  public async create(pessoa: PessoaEntity, enderecos: EnderecoEntity[]) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sqlPessoa = `INSERT INTO TB_PESSOA (CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS) VALUES (:codigo_pessoa, :nome, :sobrenome, :idade, :login, :senha, :status)`;
+      await connection.execute(sqlPessoa, [
+        pessoa.getCodigoPessoa(),
+        pessoa.getNome(),
+        pessoa.getSobrenome(),
+        pessoa.getIdade(),
+        pessoa.getLogin(),
+        pessoa.getSenha(),
+        pessoa.getStatus(),
+      ]);
+      // inserir enderecos um por um
+      for (let endereco of enderecos) {
+        const sqlEndereco = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
+        await connection.execute(sqlEndereco, [
+          endereco.getCodigoEndereco(),
+          endereco.getCodigoPessoa(),
+          endereco.getCodigoBairro(),
+          endereco.getNomeRua(),
+          endereco.getNumero(),
+          endereco.getComplemento(),
+          endereco.getCep(),
+        ]);
+      }
+
+      for (const endereco of enderecos) {
+        const sql = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
+        await connection.execute(sql, [
+          endereco.getCodigoEndereco(),
+          endereco.getCodigoPessoa(),
+          endereco.getCodigoBairro(),
+          endereco.getNomeRua(),
+          endereco.getNumero(),
+          endereco.getComplemento(),
+          endereco.getCep(),
+        ]);
+      }
+
+      await connection.commit();
+      return await this.get("");
+    } finally {
+      if (connection) {
+        await connection.close();
       }
     }
   }
