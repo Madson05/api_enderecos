@@ -12,3 +12,5 @@ class UpdatebairroController{
       response.send(await this.updateBairroService.execute(bairro));
     }
 }
+
+export default UpdatebairroController;
