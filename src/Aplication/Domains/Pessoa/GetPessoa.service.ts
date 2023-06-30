@@ -1,5 +1,5 @@
 import PessoaRepository from "../../../Infra/repositories/Pessoa.repository";
-import { GetPessoaType } from "../Pessoa/UseCases/Get/Schemas/GetPessoa.schema";
+import { GetPessoaType } from "./Schemas/GetPessoa.schema";
 
 type GetPessoaServiceType = GetPessoaType & {
   [key: string]: number | string | undefined;

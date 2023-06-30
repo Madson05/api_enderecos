@@ -6,4 +6,4 @@ export const GetPessoaSchema = zod.object({
   status: zod.string().min(1).max(2).optional(),
 });
 
-export type GetPessoaSchemaType = zod.infer<typeof GetPessoaSchema>;
+export type GetPessoaType = zod.infer<typeof GetPessoaSchema>;
