@@ -1,4 +1,4 @@
-import PessoaRepository from "../../../Infra/repositories/Pessoa.repository";
+import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import GetPessoaController from "./GetPessoa.controller";
 import GetPessoaService from "./GetPessoa.service";
 

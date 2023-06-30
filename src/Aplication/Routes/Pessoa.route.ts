@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPessoaController } from "../Domains/Pessoa/GetPessoa.factory";
+import { getPessoaController } from "../Domains/Pessoa/UseCases/Get/GetPessoa.factory";
 
 const routerPessoa = Router();
 

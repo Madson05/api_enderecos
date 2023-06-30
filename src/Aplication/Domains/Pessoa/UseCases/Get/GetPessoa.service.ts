@@ -1,4 +1,4 @@
-import PessoaRepository from "../../../Infra/repositories/Pessoa.repository";
+import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import { GetPessoaType } from "./Schemas/GetPessoa.schema";
 
 type GetPessoaServiceType = GetPessoaType & {
