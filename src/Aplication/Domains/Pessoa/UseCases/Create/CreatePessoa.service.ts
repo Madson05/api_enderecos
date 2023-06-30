@@ -6,7 +6,7 @@ import { CreateUsuarioType, createUsuarioSchema } from "./Schemas/CreatePessoa.s
 
 class CreatePessoaService{
     constructor(
-        private readonly pessoaRepository: PessoaRepository;
+        private readonly pessoaRepository: PessoaRepository
     ){}
 
     execute = async (data: CreateUsuarioType): Promise<any> => {
@@ -14,7 +14,7 @@ class CreatePessoaService{
         const codigoPessoa = await getNextSequence("SEQUENCE_PESSOA");
         const pessoa = new PessoaEntity(codigoPessoa, data.nome, data.sobrenome, data.idade, data.login, data.senha, data.status);
         const enderecos: EnderecoEntity[] = data.enderecos.map((endereco) => {
-            return new EnderecoEntity(await getNextSequence("SEQUENCE_ENDERECO"), codigoPessoa, endereco.codigoBairro, endereco.nomeRua, endereco.numero, endereco.complemento, endereco.cep);)
+            return new EnderecoEntity(await getNextSequence("SEQUENCE_ENDERECO"), codigoPessoa, endereco.codigoBairro, endereco.nomeRua, endereco.numero, endereco.complemento, endereco.cep));
         const result = await this.pessoaRepository.create(pessoa, enderecos);
         return result;
     }
