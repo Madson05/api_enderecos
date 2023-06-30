@@ -16,7 +16,8 @@ export const refactorResult = (result: any, data?: GetBairroType | undefined) =>
         result[item] = Bairro;
       }
     }
-    return [];
+    return result;
   }
   return [];
+  
 }
