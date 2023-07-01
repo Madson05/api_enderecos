@@ -3,6 +3,27 @@ import PessoaEntity from "../../Aplication/Entities/PessoaEntity";
 import getConnection from "../database/connectionDB";
 
 class PessoaRepository {
+
+  public checkExists = async (codigoPessoa: number) => {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_PESSOA WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      const result = await connection.execute(sql, [codigoPessoa]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se a pessoa existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
   public async get(query: string) {
     let connection;
     try {
