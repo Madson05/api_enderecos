@@ -64,6 +64,13 @@ class MunicipioRepository{
        FROM TB_BAIRRO
        WHERE CODIGO_MUNICIPIO = :codigo_municipio)`;
       await connection.execute(sql, [codigoMunicipio]);
+
+      const sql2 = `DELETE FROM TB_BAIRRO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      await connection.execute(sql2, [codigoMunicipio]);
+      connection.commit();
+
+      const sql3 = `DELETE FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      await connection.execute(sql3, [codigoMunicipio]);
       await connection.commit();
       return await this.get("")
     }

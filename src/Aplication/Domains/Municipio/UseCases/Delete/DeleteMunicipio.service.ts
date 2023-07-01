@@ -11,7 +11,7 @@ class DeleteMunicipioService{
     }
 
     const resultSet = await this.municipioRepository.delete(codigoMunicipio);
-
+    console.log(resultSet)
     return refactorResult(resultSet);
   }
 }
