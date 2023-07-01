@@ -90,9 +90,9 @@ GROUP BY
     let connection;
     try {
       connection = await getConnection();
-      console.log(pessoa)
+      console.log(pessoa);
       const sqlPessoa = `INSERT INTO TB_PESSOA (CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS) VALUES (:codigo_pessoa, :nome, :sobrenome, :idade, :login, :senha, :status)`;
-      console.log(sqlPessoa)
+      console.log(sqlPessoa);
       await connection.execute(sqlPessoa, [
         pessoa.getCodigoPessoa(),
         pessoa.getNome(),
@@ -102,9 +102,9 @@ GROUP BY
         pessoa.getSenha(),
         pessoa.getStatus(),
       ]);
-      
+
       for (let endereco of enderecos) {
-        console.log(endereco)
+        console.log(endereco);
         const sqlEndereco = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
         const result = await connection.execute(sqlEndereco, {
           codigo_endereco: endereco.getCodigoEndereco(),
@@ -117,9 +117,66 @@ GROUP BY
         });
       }
 
+      await connection.commit();
+      return await this.get("");
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async update(pessoa: PessoaEntity, enderecos: EnderecoEntity[]) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sqlPessoa = `UPDATE TB_PESSOA SET NOME = :nome, SOBRENOME = :sobrenome, IDADE = :idade, LOGIN = :login, SENHA = :senha, STATUS = :status WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      await connection.execute(sqlPessoa, [
+        pessoa.getNome(),
+        pessoa.getSobrenome(),
+        pessoa.getIdade(),
+        pessoa.getLogin(),
+        pessoa.getSenha(),
+        pessoa.getStatus(),
+        pessoa.getCodigoPessoa(),
+      ]);
+
+      for (let endereco of enderecos) {
+        // verificar se o endereço existe, se existir altera, se não existir cria um novo.
+
+        const sqlBusca = `SELECT * FROM TB_ENDERECO WHERE CODIGO_ENDERECO = :codigo_endereco`;
+        const result = await connection.execute(sqlBusca, [
+          endereco.getCodigoEndereco(),
+        ]);
+        if (result.rows !== undefined && result.rows.length === 0) {
+          const sqlEndereco = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
+          await connection.execute(sqlEndereco, {
+            codigo_endereco: endereco.getCodigoEndereco(),
+            codigo_pessoa: endereco.getCodigoPessoa(),
+            codigo_bairro: endereco.getCodigoBairro(),
+            nome_rua: endereco.getNomeRua(),
+            numero: endereco.getNumero(),
+            complemento: endereco.getComplemento(),
+            cep: endereco.getCep(),
+          });
+          continue;
+        }
+
+        const sqlEndereco = `UPDATE TB_ENDERECO SET CODIGO_BAIRRO = :codigo_bairro, NOME_RUA = :nome_rua, NUMERO = :numero, COMPLEMENTO = :complemento, CEP = :cep WHERE CODIGO_ENDERECO = :codigo_endereco`;
+        await connection.execute(sqlEndereco, [
+          endereco.getCodigoBairro(),
+          endereco.getNomeRua(),
+          endereco.getNumero(),
+          endereco.getComplemento(),
+          endereco.getCep(),
+          endereco.getCodigoEndereco(),
+        ]);
+      }
 
       await connection.commit();
       return await this.get("");
+    } catch (error) {
+      throw new Error("Não foi possivel atualizar a pessoa");
     } finally {
       if (connection) {
         await connection.close();
