@@ -36,3 +36,5 @@ class UpdatePessoaService {
     return result;
   }
 }
+
+export default UpdatePessoaService;
