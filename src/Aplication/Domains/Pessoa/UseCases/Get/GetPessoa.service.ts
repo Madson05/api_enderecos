@@ -1,4 +1,5 @@
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
+import { refactorResult } from "../../Utils/RefactorResult";
 import { GetPessoaType } from "./Schemas/GetPessoa.schema";
 
 type GetPessoaServiceType = GetPessoaType & {
@@ -23,7 +24,7 @@ class GetPessoaService {
     }
 
     const result = await this.pessoaRepository.get(query);
-    return result;
+    return refactorResult(result, data);
 
     
 

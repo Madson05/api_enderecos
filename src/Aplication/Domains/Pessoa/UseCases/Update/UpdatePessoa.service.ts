@@ -1,6 +1,7 @@
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
+import { refactorResult } from "../../Utils/RefactorResult";
 import { UpdatePessoaType } from "./Schema/UpdatePessoa.schema";
 
 class UpdatePessoaService {
@@ -33,7 +34,7 @@ class UpdatePessoaService {
       enderecos.push(endereco);
     }
     const result = await this.pessoaRepository.update(pessoa, enderecos);
-    return result;
+    return refactorResult(result);
   }
 }
 
