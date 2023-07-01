@@ -12,6 +12,10 @@ class PessoaRepository {
         const result = await connection.execute(sql);
 
         return result.rows;
+      }else{
+        const sql = `SELECT * FROM TB_PESSOA WHERE ${query}`;
+        const result = await connection.execute(sql);
+        return result.rows;
       }
     } finally {
       if (connection) {
