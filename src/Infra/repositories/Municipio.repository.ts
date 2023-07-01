@@ -53,6 +53,53 @@ class MunicipioRepository{
       }
     }
   }
+
+  async delete(codigoMunicipio: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `DELETE FROM TB_ENDERECO
+       WHERE CODIGO_BAIRRO IN 
+       (SELECT CODIGO_BAIRRO 
+       FROM TB_BAIRRO
+       WHERE CODIGO_MUNICIPIO = :codigo_municipio)`;
+      await connection.execute(sql, [codigoMunicipio]);
+      await connection.commit();
+      return await this.get("")
+    }
+    catch(error){
+      console.log(error);
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
+
+  async checkExists(codigoMunicipio: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      const result = await connection.execute(sql, [codigoMunicipio]);
+      await connection.commit();
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default MunicipioRepository;
