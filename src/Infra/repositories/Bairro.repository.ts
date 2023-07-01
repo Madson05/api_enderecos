@@ -96,7 +96,7 @@ class BairroRepository {
       connection = await getConnection();
       const sql = `SELECT * FROM TB_BAIRRO WHERE CODIGO_BAIRRO = :codigo_bairro`;
       const result = await connection.execute(sql, [codigoBairro]);
-      if(result.rows && result.rows.length === 0){
+      if(result.rows && result.rows.length > 0){
         return true;
       }
     }catch(error){

@@ -6,7 +6,6 @@ class DeleteBairroService{
 
   async execute(codigoBairro: number): Promise<void> {
     const bairro = await this.bairroRepository.checkExists(codigoBairro);
-    
     if (bairro !== true) {
       throw new Error('Bairro não encontrado');
     }
