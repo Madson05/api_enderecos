@@ -2,6 +2,7 @@ import zod from "zod";
 
 export const updateEnderecoSchema = zod.object({
   codigoEndereco: zod.number(),
+  codigoPessoa: zod.number(),
   codigoBairro: zod.number(),
   nomeRua: zod.string(),
   numero: zod.string(),

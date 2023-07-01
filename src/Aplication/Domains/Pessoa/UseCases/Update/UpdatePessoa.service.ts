@@ -32,7 +32,7 @@ class UpdatePessoaService {
       );
       enderecos.push(endereco);
     }
-    const result = await this.pessoaRepository.create(pessoa, enderecos);
+    const result = await this.pessoaRepository.update(pessoa, enderecos);
     return result;
   }
 }
