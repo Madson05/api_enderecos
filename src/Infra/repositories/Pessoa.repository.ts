@@ -90,7 +90,9 @@ GROUP BY
     let connection;
     try {
       connection = await getConnection();
+      console.log(pessoa)
       const sqlPessoa = `INSERT INTO TB_PESSOA (CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS) VALUES (:codigo_pessoa, :nome, :sobrenome, :idade, :login, :senha, :status)`;
+      console.log(sqlPessoa)
       await connection.execute(sqlPessoa, [
         pessoa.getCodigoPessoa(),
         pessoa.getNome(),
@@ -100,32 +102,21 @@ GROUP BY
         pessoa.getSenha(),
         pessoa.getStatus(),
       ]);
-      // inserir enderecos um por um
+      
       for (let endereco of enderecos) {
+        console.log(endereco)
         const sqlEndereco = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
-        await connection.execute(sqlEndereco, [
-          endereco.getCodigoEndereco(),
-          endereco.getCodigoPessoa(),
-          endereco.getCodigoBairro(),
-          endereco.getNomeRua(),
-          endereco.getNumero(),
-          endereco.getComplemento(),
-          endereco.getCep(),
-        ]);
+        const result = await connection.execute(sqlEndereco, {
+          codigo_endereco: endereco.getCodigoEndereco(),
+          codigo_pessoa: endereco.getCodigoPessoa(),
+          codigo_bairro: endereco.getCodigoBairro(),
+          nome_rua: endereco.getNomeRua(),
+          numero: endereco.getNumero(),
+          complemento: endereco.getComplemento(),
+          cep: endereco.getCep(),
+        });
       }
 
-      for (const endereco of enderecos) {
-        const sql = `INSERT INTO TB_ENDERECO (CODIGO_ENDERECO, CODIGO_PESSOA, CODIGO_BAIRRO, NOME_RUA, NUMERO, COMPLEMENTO, CEP) VALUES (:codigo_endereco, :codigo_pessoa, :codigo_bairro, :nome_rua, :numero, :complemento, :cep)`;
-        await connection.execute(sql, [
-          endereco.getCodigoEndereco(),
-          endereco.getCodigoPessoa(),
-          endereco.getCodigoBairro(),
-          endereco.getNomeRua(),
-          endereco.getNumero(),
-          endereco.getComplemento(),
-          endereco.getCep(),
-        ]);
-      }
 
       await connection.commit();
       return await this.get("");

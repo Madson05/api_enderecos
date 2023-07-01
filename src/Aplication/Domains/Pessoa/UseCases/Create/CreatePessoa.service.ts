@@ -1,8 +1,9 @@
+import { unknown } from "zod";
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
-import { CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
+import { CreateEnderecoType, CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
 
 class CreatePessoaService{
     constructor(
@@ -12,10 +13,14 @@ class CreatePessoaService{
     execute = async (data: CreateUsuarioType): Promise<any> => {
         // separar a data em duas entidades uma com o atributo endereço e outtra com o restante.
         const codigoPessoa = await getNextSequence("SEQUENCE_PESSOA");
-        const codigoBairro = await getNextSequence("SEQUENCE_BAIRRO");
         const pessoa = new PessoaEntity(codigoPessoa, data.nome, data.sobrenome, data.idade, data.login, data.senha, data.status);
-        const enderecos: EnderecoEntity[] = data.enderecos.map((endereco) => {
-            return new EnderecoEntity(codigoBairro, codigoPessoa, endereco.codigoBairro, endereco.nomeRua, endereco.numero, endereco.complemento, endereco.cep)});
+        const enderecos: EnderecoEntity[] = [];
+
+        for (let item of data.enderecos){
+            const codigoEndereco = await getNextSequence("SEQUENCE_ENDERECO");
+            const endereco = new EnderecoEntity(codigoEndereco, codigoPessoa, item.codigoBairro, item.nomeRua, item.numero, item.complemento, item.cep);
+            enderecos.push(endereco);
+        }
         const result = await this.pessoaRepository.create(pessoa, enderecos);
         return result;
     }

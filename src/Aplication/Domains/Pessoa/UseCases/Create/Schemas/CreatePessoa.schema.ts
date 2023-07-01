@@ -1,6 +1,6 @@
 import zod from "zod";
 
-const createEnderecoSchema = zod.object({
+export const createEnderecoSchema = zod.object({
   codigoBairro: zod.number(),
   nomeRua: zod.string(),
   numero: zod.string(),
@@ -19,3 +19,4 @@ export const createUsuarioSchema = zod.object({
 });
 
 export type CreateUsuarioType = zod.infer<typeof createUsuarioSchema>;
+export type CreateEnderecoType = zod.infer<typeof createEnderecoSchema>;
