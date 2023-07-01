@@ -9,7 +9,9 @@ class DeletePessoaService {
     if (!pessoa) {
       throw new Error('Pessoa not found');
     }
-    
+
     await this.pessoaRepository.delete(codigoPessoa);
   }
 }
+
+export default DeletePessoaService;
