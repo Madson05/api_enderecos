@@ -29,10 +29,9 @@ class GetPessoaService {
 
     const resultSet = await this.pessoaRepository.get(query);
 
-    if (data.codigoPessoa !== undefined || data.login !== undefined) {
+    if (data.codigoPessoa !== undefined) {
       const pessoa = refactorResult(resultSet, data);
 
-      console.log(resultSet + "111")
       if (resultSet === null ||  resultSet === undefined || resultSet.length === 0) {
         return [];
       }
@@ -69,7 +68,8 @@ class GetPessoaService {
             pessoa.enderecos[item].bairro = {
               codigoBairro: Number(dataBairro[0]),
               codigoMunicipio: Number(dataBairro[1]),
-              nomeBairro: String(dataBairro[2]),
+              nome: String(dataBairro[2]),
+              status: Number(dataBairro[3]),
               municipio: {},
             };
           }
@@ -84,6 +84,8 @@ class GetPessoaService {
             pessoa.enderecos[item].bairro.municipio = {
               codigoMunicipio: Number(dataMunicipio[0]),
               codigoUF: String(dataMunicipio[1]),
+              nome: String(dataMunicipio[2]),
+              status: Number(dataMunicipio[3]),
               uf: {},
             };
           }
