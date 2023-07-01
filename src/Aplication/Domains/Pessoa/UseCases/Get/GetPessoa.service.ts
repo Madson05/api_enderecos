@@ -32,7 +32,7 @@ class GetPessoaService {
 
     console.log(resultSet);
 
-    if (data.codigoPessoa !== undefined) {
+    if (data.codigoPessoa !== undefined || data.login !== undefined) {
       const pessoa = refactorResult(resultSet, data);
       const enderecos = await this.pessoaRepository.getEnderecos(
         Number(data.codigoPessoa)
