@@ -20,6 +20,62 @@ class PessoaRepository {
     }
   }
 
+  public async getEnderecos(codigoPessoa: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_ENDERECO WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      const result = await connection.execute(sql, [codigoPessoa]);
+      return result.rows;
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async getBairro(codigoBairro: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_BAIRRO WHERE CODIGO_BAIRRO = :codigo_bairro`;
+      const result = await connection.execute(sql, [codigoBairro]);
+      return result.rows;
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async getMunicipio(codigoMunicipio: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      const result = await connection.execute(sql, [codigoMunicipio]);
+      return result.rows;
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async getUF(codigoUF: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_UF WHERE CODIGO_UF = :codigo_uf`;
+      const result = await connection.execute(sql, [codigoUF]);
+      return result.rows;
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
   public async create(pessoa: PessoaEntity, enderecos: EnderecoEntity[]) {
     let connection;
     try {

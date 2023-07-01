@@ -23,8 +23,12 @@ class GetPessoaService {
       }
     }
 
-    const result = await this.pessoaRepository.get(query);
-    return refactorResult(result, data);
+    const resultSet = await this.pessoaRepository.get(query);
+
+    if(data.codigoPessoa !== undefined) {
+      const pessoa = refactorResult(resultSet, data);
+      const enderecos = await this.pessoaRepository.getEnderecos(data.codigoPessoa);
+    }
 
     
 
