@@ -10,3 +10,5 @@ class UpdatePessoaController{
     response.status(200).send(await this.updatePessoaService.execute(data));
   }
 }
+
+export default UpdatePessoaController;
