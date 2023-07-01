@@ -1,6 +1,5 @@
-import { unknown } from "zod";
+
 import { GetPessoaType } from "../UseCases/Get/Schemas/GetPessoa.schema";
-import EnderecoEntity from "../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../Entities/PessoaEntity";
 
 export const refactorResult = (result: any, data?: GetPessoaType) => {
