@@ -10,3 +10,5 @@ class DeletePessoaController{
     response.status(200).send();
   }
 }
+
+export default DeletePessoaController;
