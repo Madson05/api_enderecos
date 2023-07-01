@@ -12,7 +12,7 @@ export const createUsuarioSchema = zod.object({
   nome: zod.string(),
   sobrenome: zod.string(),
   idade: zod.number(),
-  login: zod.string(),
+  login: zod.string().email("Email inválido"),
   senha: zod.string(),
   status: zod.number(),
   enderecos: zod.array(createEnderecoSchema),

@@ -4,6 +4,7 @@ import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
 import { CreateEnderecoType, CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
+import { refactorResult } from "../../Utils/RefactorResult";
 
 class CreatePessoaService{
     constructor(
@@ -22,7 +23,7 @@ class CreatePessoaService{
             enderecos.push(endereco);
         }
         const result = await this.pessoaRepository.create(pessoa, enderecos);
-        return result;
+        return refactorResult(result);
     }
 }
 

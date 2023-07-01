@@ -18,22 +18,29 @@ class GetPessoaService {
           if (query !== "") {
             query += " AND ";
           }
-          if(item === "codigoPessoa"){
+          if (item === "codigoPessoa") {
             query += `${"codigo_pessoa"}=${data[item]}`;
-          }else{
+          } else {
             query += `${item}='${data[item]}'`;
           }
         }
       }
     }
 
-    
     const resultSet = await this.pessoaRepository.get(query);
-
-    console.log(resultSet);
 
     if (data.codigoPessoa !== undefined || data.login !== undefined) {
       const pessoa = refactorResult(resultSet, data);
+
+      console.log(resultSet + "111")
+      if (resultSet === null ||  resultSet === undefined || resultSet.length === 0) {
+        return [];
+      }
+
+      if (data.codigoPessoa === undefined || data.codigoPessoa === null) {
+        data.codigoPessoa = pessoa.codigoPessoa;
+      }
+
       const enderecos = await this.pessoaRepository.getEnderecos(
         Number(data.codigoPessoa)
       );
@@ -53,10 +60,10 @@ class GetPessoaService {
           };
 
           pessoa.enderecos.push(endereco);
-          
+
           const codigoBairro = pessoa.enderecos[item].codigoBairro;
           const bairro = await this.pessoaRepository.getBairro(codigoBairro);
-    
+
           if (bairro && bairro.length > 0) {
             const dataBairro = bairro[0] as unknown[];
             pessoa.enderecos[item].bairro = {
@@ -67,13 +74,11 @@ class GetPessoaService {
             };
           }
 
-          
-    
           const codigoMunicipio = pessoa.enderecos[0].bairro.codigoMunicipio;
           const municipio = await this.pessoaRepository.getMunicipio(
             codigoMunicipio
           );
-    
+
           if (municipio && municipio.length > 0) {
             const dataMunicipio = municipio[0] as unknown[];
             pessoa.enderecos[item].bairro.municipio = {
@@ -82,10 +87,10 @@ class GetPessoaService {
               uf: {},
             };
           }
-    
+
           const codigoUF = pessoa.enderecos[0].bairro.municipio.codigoMunicipio;
           const uf = await this.pessoaRepository.getUF(codigoUF);
-    
+
           if (uf && uf.length > 0) {
             const dataUF = uf[0] as unknown[];
             pessoa.enderecos[item].bairro.municipio.uf = {
@@ -95,13 +100,9 @@ class GetPessoaService {
             };
           }
         }
-
-        
       }
 
       return pessoa;
-
-      
     } else {
       const pessoas = refactorResult(resultSet);
       return pessoas;

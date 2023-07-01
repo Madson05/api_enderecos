@@ -13,8 +13,10 @@ class PessoaRepository {
 
         return result.rows;
       }else{
+        console.log(query)
         const sql = `SELECT * FROM TB_PESSOA WHERE ${query}`;
         const result = await connection.execute(sql);
+        console.log(query)
         return result.rows;
       }
     } finally {
