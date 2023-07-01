@@ -6,8 +6,8 @@ class DeletePessoaController{
 
   handle = async (request: Request, response: Response): Promise<any> => {
     const { codigoPessoa } = request.params;
-    await this.deletePessoaService.execute(Number(codigoPessoa));
-    response.status(200).send();
+    
+    response.status(200).send(await this.deletePessoaService.execute(Number(codigoPessoa)));
   }
 }
 
