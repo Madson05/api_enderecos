@@ -179,6 +179,30 @@ class PessoaRepository {
       }
     }
   }
+
+  public async delete(codigoPessoa: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+
+      const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      await connection.execute(sqlEndereco, [codigoPessoa]);
+
+      const sql = `DELETE FROM TB_PESSOA WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      await connection.execute(sql, [codigoPessoa]);
+      await connection.commit();
+      return await this.get("");
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel deletar a pessoa");
+    }finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default PessoaRepository;
