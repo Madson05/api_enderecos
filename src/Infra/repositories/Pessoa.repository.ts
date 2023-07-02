@@ -40,7 +40,13 @@ class PessoaRepository {
         console.log(query)
         return result.rows;
       }
-    } finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel buscar as pessoas")
+    }
+     finally {
       if (connection) {
         connection.close();
       }
@@ -54,7 +60,14 @@ class PessoaRepository {
       const sql = `SELECT * FROM TB_ENDERECO WHERE CODIGO_PESSOA = :codigo_pessoa`;
       const result = await connection.execute(sql, [codigoPessoa]);
       return result.rows;
-    } finally {
+    }
+    catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel buscar os endereços da pessoa")
+    }
+    finally {
       if (connection) {
         await connection.close();
       }
@@ -68,7 +81,13 @@ class PessoaRepository {
       const sql = `SELECT * FROM TB_BAIRRO WHERE CODIGO_BAIRRO = :codigo_bairro`;
       const result = await connection.execute(sql, [codigoBairro]);
       return result.rows;
-    } finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel buscar o bairro")
+    }
+     finally {
       if (connection) {
         await connection.close();
       }
@@ -82,7 +101,14 @@ class PessoaRepository {
       const sql = `SELECT * FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
       const result = await connection.execute(sql, [codigoMunicipio]);
       return result.rows;
-    } finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel buscar o municipio")
+    }
+    
+    finally {
       if (connection) {
         await connection.close();
       }
@@ -96,7 +122,13 @@ class PessoaRepository {
       const sql = `SELECT * FROM TB_UF WHERE CODIGO_UF = :codigo_uf`;
       const result = await connection.execute(sql, [codigoUF]);
       return result.rows;
-    } finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel buscar a UF")
+    } 
+    finally {
       if (connection) {
         await connection.close();
       }
@@ -136,7 +168,13 @@ class PessoaRepository {
 
       await connection.commit();
       return await this.get("");
-    } finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel criar a pessoa");
+    }
+     finally {
       if (connection) {
         await connection.close();
       }
@@ -193,6 +231,9 @@ class PessoaRepository {
       await connection.commit();
       return await this.get("");
     } catch (error) {
+      if (connection) {
+        await connection.rollback();
+      }
       throw new Error("Não foi possivel atualizar a pessoa");
     } finally {
       if (connection) {
@@ -262,7 +303,13 @@ class PessoaRepository {
       }
       await connection.commit();
       return await this.get("");
-    }finally {
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel atualizar o status da pessoa");
+    }
+    finally {
       if (connection) {
         await connection.close();
       }
