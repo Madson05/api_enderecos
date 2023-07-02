@@ -19,6 +19,9 @@ class UFRepository {
       const result = await this.get("");
       return result;
     } catch (error) { 
+      if(connection){
+        await connection.rollback();
+      }
       throw new Error("Não foi possivel criar a UF");
     } finally {
       if (connection) {
@@ -63,6 +66,9 @@ class UFRepository {
       const result = await this.get("");
       return result;
     }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
       throw new Error("Não foi possivel atualizar a UF");
     }finally{
       if(connection){
@@ -96,6 +102,11 @@ class UFRepository {
       const result = await this.get("");
       return result;
     
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel deletar a UF");
     }finally{
       if(connection){
         await connection.close();
@@ -114,6 +125,9 @@ class UFRepository {
         return true;
       }
     }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
       throw new Error("Não foi possivel verificar se a UF existe");
     }finally{
       if(connection){
@@ -134,6 +148,9 @@ class UFRepository {
         return result[0];
       }
     }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
       throw new Error("Não foi possivel verificar o status da UF");
     }finally{
       if(connection){
@@ -170,6 +187,11 @@ class UFRepository {
       const result = await this.get("");
 
       return result;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel atualizar o status da UF")
     }finally{
       if(connection){
         await connection.close();
