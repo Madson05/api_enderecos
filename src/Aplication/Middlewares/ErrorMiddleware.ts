@@ -5,7 +5,19 @@ class errorMiddleware{
     public async handle(error: Error, req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 
         if (error instanceof ZodError) {
-          res.status(400).json({
+            if((error.issues[0].code === "invalid_type") && (error.issues[0].message === "Required")){
+                return res.status(400).json({
+                    status: 400,
+                    mensagem: `O campo ${error.issues[0].path[0]} deve ser do tipo ${error.issues[0].expected} e é obrigatório`,
+                });
+            }
+            if(error.issues[0].code === "invalid_type"){
+                return res.status(400).json({
+                    status: 400,
+                    mensagem: `O campo ${error.issues[0].path[0]} deve ser do tipo ${error.issues[0].expected}`,
+                });
+            }
+          return res.status(400).json({
             status: 400,
             mensagem: error.issues[0].message,
           });

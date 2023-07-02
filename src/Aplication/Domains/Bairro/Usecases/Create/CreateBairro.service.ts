@@ -12,7 +12,6 @@ class CreateBairroService {
     const bairro = new BairroEntity(await getNextSequence("SEQUENCE_BAIRRO"), data.codigoMunicipio, data.nome, data.status);
 
     const result = await this.bairroRepository.create(bairro);
-    console.log(result)
     return refactorResult(result);
   }
 }
