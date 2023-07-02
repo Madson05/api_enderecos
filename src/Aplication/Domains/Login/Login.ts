@@ -12,7 +12,7 @@ class Login {
     const pessoa = GetPessoaSchema.parse(request.body);
     const result = await this.service.execute(pessoa);
 
-    if (result.length === 0) {
+    if (!result) {
       return response.status(404).send({ message: "Usuário não encontrado" });
     }
 

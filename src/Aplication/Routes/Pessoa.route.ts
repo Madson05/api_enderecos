@@ -4,14 +4,15 @@ import { createPessoaController } from "../Domains/Pessoa/UseCases/Create/Create
 import { updatePessoaController } from "../Domains/Pessoa/UseCases/Update/UpdatePessoa.factory";
 import { deletePessoaController } from "../Domains/Pessoa/UseCases/Delete/DeletePessoa.factory";
 import { updateStatusController } from "../Domains/Pessoa/UseCases/UpdateStatus/UpdateStatus.factory";
+import { authMiddleware } from "../Middlewares/authMiddleware";
 
 const routerPessoa = Router();
 
-routerPessoa.get("/", getPessoaController.handle);
+routerPessoa.get("/",authMiddleware, getPessoaController.handle);
 routerPessoa.post("/", createPessoaController.handle);
-routerPessoa.put("/", updatePessoaController.handle);
-routerPessoa.patch("/:codigoPessoa", updateStatusController.handle);
-routerPessoa.delete("/:codigoPessoa", deletePessoaController.handle);
+routerPessoa.put("/",authMiddleware, updatePessoaController.handle);
+routerPessoa.patch("/:codigoPessoa",authMiddleware, updateStatusController.handle);
+routerPessoa.delete("/:codigoPessoa",authMiddleware, authMiddleware, deletePessoaController.handle);
 
 
 export default routerPessoa;
