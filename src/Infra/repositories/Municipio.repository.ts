@@ -107,6 +107,62 @@ class MunicipioRepository{
       }
     }
   }
+
+  async updateStatus(codigoMunicipio: number){
+    let connection;
+    const status = 2;
+    try{
+      connection = await getConnection();
+
+      const sqlBairro = `UPDATE TB_BAIRRO SET STATUS = :status WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      await connection.execute(sqlBairro, [status, codigoMunicipio]);
+      
+      const sqlEndereco = `DELETE FROM TB_ENDERECO
+      WHERE CODIGO_BAIRRO IN 
+      (SELECT CODIGO_BAIRRO 
+      FROM TB_BAIRRO
+      WHERE CODIGO_MUNICIPIO = :codigo_municipio)`;
+      await connection.execute(sqlEndereco, [codigoMunicipio]);
+
+      const sql = `UPDATE TB_MUNICIPIO SET STATUS = :status WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      await connection.execute(sql, [status, codigoMunicipio]);
+      await connection.commit();
+      return await this.get("")
+    }
+    catch(error){
+      console.log(error);
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
+
+  async checkStatus(codigoMunicipio: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT STATUS FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio`;
+      const result = await connection.execute(sql, [codigoMunicipio]);
+      await connection.commit();
+      if(result.rows && result.rows.length > 0){
+        const status = result.rows[0] as number[];
+        return status[0] as number;
+      }
+      else{
+        return 0;
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default MunicipioRepository;
