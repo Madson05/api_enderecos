@@ -1,4 +1,5 @@
 import UFRepository from "../../../../../Infra/repositories/UF.repository";
+import { refactorResult } from "../../Utils/RefactorResult";
 
 class UpdateStatusUFService {
   constructor(private readonly ufRepository: UFRepository) {}
@@ -9,7 +10,15 @@ class UpdateStatusUFService {
     if (!uf) {
       throw new Error("UF não encontrada");
     }
-    return await this.ufRepository.UpdateStatus(codigoUF);
+
+    const status = await this.ufRepository.checkStatus(codigoUF);
+
+    if (status === 2) {
+      throw new Error("UF já está inativa");
+    }
+
+    const resultSet = await this.ufRepository.UpdateStatus(codigoUF);
+    return refactorResult(resultSet);
   }
 }
 

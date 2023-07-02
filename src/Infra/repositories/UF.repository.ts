@@ -122,6 +122,27 @@ class UFRepository {
     }
   }
 
+  async checkStatus(codigoUF: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT status FROM TB_UF WHERE CODIGO_UF = :codigoUF`;
+      const resultSet = await connection.execute(sql, [codigoUF]);
+
+      if(resultSet.rows && resultSet.rows.length > 0){
+        const result = resultSet.rows[0] as number[];
+        return result[0];
+      }
+    }catch(error){
+      throw new Error("Não foi possivel verificar o status da UF");
+    }finally{
+      if(connection){
+        connection.close();
+      }
+    }
+  }
+
+
   async UpdateStatus(codigoUF: number){
     let connection;
     try{
