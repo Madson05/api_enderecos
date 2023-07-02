@@ -103,6 +103,25 @@ class UFRepository {
       }
     }
   }
+
+  async checkExists(codigoUF: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_UF WHERE CODIGO_UF = :codigoUF`;
+      const result = await connection.execute(sql, [codigoUF]);
+
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+    }catch(error){
+      throw new Error("Não foi possivel verificar se a UF existe");
+    }finally{
+      if(connection){
+        connection.close();
+      }
+    }
+  }
 }
 
 export default UFRepository;
