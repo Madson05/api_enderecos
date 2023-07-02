@@ -1,4 +1,5 @@
-import { unknown } from "zod";
+import bcrypt from "bcrypt"
+import { SHA256 } from "crypto-js";
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
@@ -12,7 +13,7 @@ class CreatePessoaService{
     ){}
 
     execute = async (data: CreateUsuarioType): Promise<any> => {
-        // separar a data em duas entidades uma com o atributo endereço e outtra com o restante.
+        
         const codigoPessoa = await getNextSequence("SEQUENCE_PESSOA");
         const pessoa = new PessoaEntity(codigoPessoa, data.nome, data.sobrenome, data.idade, data.login, data.senha, data.status);
         const enderecos: EnderecoEntity[] = [];

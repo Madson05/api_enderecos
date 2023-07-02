@@ -172,6 +172,7 @@ class PessoaRepository {
       if(connection){
         await connection.rollback();
       }
+      console.log(error);
       throw new Error("Não foi possivel criar a pessoa");
     }
      finally {
@@ -315,6 +316,7 @@ class PessoaRepository {
       }
     }
   }
+
 }
 
 export default PessoaRepository;
