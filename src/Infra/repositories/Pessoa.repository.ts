@@ -224,6 +224,48 @@ class PessoaRepository {
       }
     }
   }
+
+  checkStatus = async (codigoPessoa: number) => {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `select status from TB_PESSOA where codigo_pessoa = :codigo_pessoa`;
+      const result = await connection.execute(sql, [codigoPessoa]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar o status da pessoa");
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  };
+  
+  public async updateStatus(codigoPessoa: number, status: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `UPDATE TB_PESSOA SET STATUS = :status WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      await connection.execute(sql, [status, codigoPessoa]);
+      if(status === 2){
+        const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      }
+      await connection.commit();
+      return await this.get("");
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel atualizar o status da pessoa");
+    } finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default PessoaRepository;
