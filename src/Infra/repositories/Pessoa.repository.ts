@@ -225,13 +225,18 @@ class PessoaRepository {
     }
   }
 
-  checkStatus = async (codigoPessoa: number) => {
+  checkStatus = async (codigoPessoa: number): Promise<number> =>{
     let connection;
     try {
       connection = await getConnection();
       const sql = `select status from TB_PESSOA where codigo_pessoa = :codigo_pessoa`;
-      const result = await connection.execute(sql, [codigoPessoa]);
-      return result.rows;
+      const resultSet = await connection.execute(sql, [codigoPessoa]);
+      if(resultSet.rows && resultSet.rows.length > 0){
+        let result = resultSet.rows[0] as number[];
+        return result[0];
+      }
+      return 1;
+      
     }catch(error){
       if(connection){
         await connection.rollback();
@@ -244,23 +249,20 @@ class PessoaRepository {
     }
   };
   
-  public async updateStatus(codigoPessoa: number, status: number) {
+  public async updateStatus(codigoPessoa: number) {
     let connection;
+    let status = 2;
     try {
       connection = await getConnection();
       const sql = `UPDATE TB_PESSOA SET STATUS = :status WHERE CODIGO_PESSOA = :codigo_pessoa`;
       await connection.execute(sql, [status, codigoPessoa]);
       if(status === 2){
         const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_PESSOA = :codigo_pessoa`;
+        await connection.execute(sqlEndereco, [codigoPessoa]);
       }
       await connection.commit();
       return await this.get("");
-    }catch(error){
-      if(connection){
-        await connection.rollback();
-      }
-      throw new Error("Não foi possivel atualizar o status da pessoa");
-    } finally {
+    }finally {
       if (connection) {
         await connection.close();
       }
