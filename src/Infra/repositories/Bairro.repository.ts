@@ -99,11 +99,6 @@ class BairroRepository {
       if(result.rows && result.rows.length > 0){
         return true;
       }
-    }catch(error){
-      if(connection){
-        await connection.rollback();
-      }
-      throw new Error("Não foi possivel verificar se o bairro existe");
     }
      finally {
       if (connection) {
@@ -111,6 +106,45 @@ class BairroRepository {
       }
     }
   }
+
+  async updateStatus(codigoBairro: number ) {
+    let connection;
+    const status = 2;
+    try {
+      connection = await getConnection();
+      const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_BAIRRO = :codigo_bairro`;
+      await connection.execute(sqlEndereco, [codigoBairro]);
+      const sql = `UPDATE TB_BAIRRO SET status = :status WHERE CODIGO_BAIRRO = :codigo_bairro`;
+      await connection.execute(sql, [status, codigoBairro]);
+      await connection.commit();
+      return await this.get("");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      if (connection) {
+        connection.close();
+      }
+    }
+  }
+
+  checkStatus = async (codigoBairro: number): Promise<number> =>{
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `select status from TB_BAIRRO where codigo_bairro = :codigoBairro`;
+      const resultSet = await connection.execute(sql, [codigoBairro]);
+      if(resultSet.rows && resultSet.rows.length > 0){
+        let result = resultSet.rows[0] as number[];
+        return result[0];
+      }
+      return 1;
+      
+    }finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  };
 }
 
 export default BairroRepository;
