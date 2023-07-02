@@ -15,7 +15,10 @@ class MunicipioRepository{
       await connection.commit();
       return result.rows;
     
-    }finally{
+    }catch(error){
+      throw new Error("Não foi possivel buscar os municipios")
+    }
+    finally{
       if(connection){
         await connection.close();
       }
@@ -31,7 +34,11 @@ class MunicipioRepository{
       await connection.commit();
       return await this.get("")
     
-    }finally{
+    }catch(error){
+      throw new Error("Não foi possivel criar o municipio")
+    }
+    
+    finally{
       if(connection){
         await connection.close();
       }
@@ -47,6 +54,8 @@ class MunicipioRepository{
       await connection.commit();
       return await this.get("")
     
+    }catch(error){
+      throw new Error("Não foi possivel atualizar o municipio")
     }finally{
       if(connection){
         await connection.close();
@@ -75,7 +84,7 @@ class MunicipioRepository{
       return await this.get("")
     }
     catch(error){
-      console.log(error);
+      throw new Error("Não foi possivel deletar o municipio")
     }
     finally{
       if(connection){
@@ -99,7 +108,7 @@ class MunicipioRepository{
       }
     }
     catch(error){
-      console.log(error);
+      throw new Error("Não foi possivel buscar o municipio")
     }
     finally{
       if(connection){
@@ -130,7 +139,7 @@ class MunicipioRepository{
       return await this.get("")
     }
     catch(error){
-      console.log(error);
+      throw new Error("Não foi possivel atualizar o status do municipio")
     }
     finally{
       if(connection){
@@ -155,7 +164,7 @@ class MunicipioRepository{
       }
     }
     catch(error){
-      console.log(error);
+      throw new Error("Não foi possivel verificar o status do municipio")
     }
     finally{
       if(connection){
