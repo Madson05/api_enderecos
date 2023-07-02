@@ -75,10 +75,10 @@ class UFRepository {
     let connection;
     try{
       connection = await getConnection();
-      const sql = `DELETE FROM TB_ENDERECOS WHERE CODIGO_BAIRRO IN(
+      const sql = `DELETE FROM TB_ENDERECO WHERE CODIGO_BAIRRO IN(
         SELECT CODIGO_BAIRRO FROM TB_BAIRRO WHERE CODIGO_MUNICIPIO IN(
           SELECT CODIGO_MUNICIPIO FROM TB_MUNICIPIO WHERE CODIGO_UF = :codigoUF
-        )`;
+        ))`;
       await connection.execute(sql, [codigoUF]);
 
       const sql2 = `DELETE FROM TB_BAIRRO WHERE CODIGO_MUNICIPIO IN(
@@ -95,8 +95,7 @@ class UFRepository {
       await connection.commit();
       const result = await this.get("");
       return result;
-    }catch(error){
-      throw new Error("Não foi possivel deletar a UF");
+    
     }finally{
       if(connection){
         await connection.close();
