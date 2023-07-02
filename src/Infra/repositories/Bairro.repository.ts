@@ -15,7 +15,10 @@ class BairroRepository {
       const result = await connection.execute(sql);
       await connection.commit();
       return result.rows;
-    } finally {
+    } catch(error){
+      throw new Error("Não foi possivel buscar os bairros");
+    }
+    finally {
       if (connection) {
         await connection.close();
       }
@@ -36,7 +39,7 @@ class BairroRepository {
       await connection.commit();
       return await this.get("");
     } catch (error) {
-      console.log(error);
+      throw new Error("Não foi possivel criar o bairro");
     } finally {
       if (connection) {
         await connection.close();
@@ -59,7 +62,7 @@ class BairroRepository {
       await connection.commit();
       return await this.get("");
     } catch (error) {
-      console.log(error);
+      throw new Error("Não foi possivel atualizar o bairro");
     } finally {
       if (connection) {
         connection.close();
@@ -99,6 +102,8 @@ class BairroRepository {
       if(result.rows && result.rows.length > 0){
         return true;
       }
+    }catch(error){
+      throw new Error("Não foi possivel buscar o bairro");
     }
      finally {
       if (connection) {
@@ -115,11 +120,11 @@ class BairroRepository {
       const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_BAIRRO = :codigo_bairro`;
       await connection.execute(sqlEndereco, [codigoBairro]);
       const sql = `UPDATE TB_BAIRRO SET status = :status WHERE CODIGO_BAIRRO = :codigo_bairro`;
-      await connection.execute(sql, [status, codigoBairro]);
+      await connection.execute(sql, [status, ]);
       await connection.commit();
       return await this.get("");
     } catch (error) {
-      console.log(error);
+      throw new Error("Não foi possivel atualizar o status do bairro");
     } finally {
       if (connection) {
         connection.close();
@@ -139,7 +144,10 @@ class BairroRepository {
       }
       return 1;
       
-    }finally {
+    }catch(error){
+      throw new Error("Não foi possivel verificar o status do bairro");
+    }
+    finally {
       if (connection) {
         await connection.close();
       }
