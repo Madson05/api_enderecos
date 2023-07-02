@@ -11,6 +11,14 @@ class CreateUFService {
     async execute(UFDto: CreateUFType): Promise<any> {
         const UF = new UFEntity(await getNextSequence("SEQUENCE_UF"), UFDto.sigla, UFDto.nome, UFDto.status);
 
+        
+        const UFExistsBySigla = await this.uFRepository.checkExistsBySigla(UF.getSigla());
+        const UFExistsByNome = await this.uFRepository.checkExistsByNome(UF.getNome());
+
+        if (UFExistsBySigla || UFExistsByNome) {
+            throw new Error("UF já cadastrada");
+        }
+
         const result = await this.uFRepository.create(UF);
         return refactorResult(result);
         

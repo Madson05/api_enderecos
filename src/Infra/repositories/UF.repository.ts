@@ -159,7 +159,6 @@ class UFRepository {
     }
   }
 
-
   async UpdateStatus(codigoUF: number){
     let connection;
     try{
@@ -198,6 +197,50 @@ class UFRepository {
       }
     }
 
+  }
+
+  async checkExistsBySigla(sigla: string){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_UF WHERE UPPER(SIGLA) = UPPER(:sigla)`;
+      const result = await connection.execute(sql, [sigla]);
+
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se a UF existe");
+    }finally{
+      if(connection){
+        connection.close();
+      }
+    }
+  }
+
+  async checkExistsByNome(nome: string){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_UF WHERE UPPER(NOME) = UPPER(:nome)`;
+      const result = await connection.execute(sql, [nome]);
+
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se a UF existe");
+    }finally{
+      if(connection){
+        connection.close();
+      }
+    }
   }
 }
 

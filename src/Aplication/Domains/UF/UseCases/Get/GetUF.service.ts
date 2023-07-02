@@ -19,7 +19,7 @@ class GetUFService {
           if (query !== "") {
             query += " AND ";
           }
-          query += `${item}='${data[item]}'`;
+          query += `UPPER(${item})=UPPER('${data[item]}')`;
         }
       }
     }
