@@ -121,6 +121,43 @@ class UFRepository {
       }
     }
   }
+
+  async UpdateStatus(codigoUF: number){
+    let connection;
+    try{
+      const status = 2;
+      connection = await getConnection();
+
+      const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_BAIRRO IN(
+        SELECT CODIGO_BAIRRO FROM TB_BAIRRO WHERE CODIGO_MUNICIPIO IN(
+          SELECT CODIGO_MUNICIPIO FROM TB_MUNICIPIO WHERE CODIGO_UF = :codigoUF
+        ))`;
+      await connection.execute(sqlEndereco, [status, codigoUF]);
+
+      const sqlBairro = `UPDATE TB_BAIRRO SET status = :status WHERE CODIGO_MUNICIPIO IN(
+        SELECT CODIGO_MUNICIPIO FROM TB_MUNICIPIO WHERE CODIGO_UF = :codigoUF
+      )`;
+      await connection.execute(sqlBairro, [status, codigoUF]);
+
+      const sqlMunicipio = `UPDATE TB_MUNICIPIO SET status = :status WHERE CODIGO_UF = :codigoUF`;
+      await connection.execute(sqlMunicipio, [status, codigoUF]);
+
+      const sql = `UPDATE TB_UF SET status = :status WHERE codigo_UF = :codigoUF`;
+      await connection.execute(sql, [status, codigoUF]);
+
+      await connection.commit();
+      const result = await this.get("");
+      
+      return result;
+    }catch(error){
+      throw new Error("Não foi possivel atualizar o status da UF");
+    }finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+
+  }
 }
 
 export default UFRepository;
