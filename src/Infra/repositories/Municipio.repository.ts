@@ -172,6 +172,56 @@ class MunicipioRepository{
       }
     }
   }
+
+  async checkExistsByNome(nome: string, codigoUF: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_MUNICIPIO WHERE UPPER(NOME) = UPPER(:nome) AND CODIGO_UF = :codigo_uf`;
+      const result = await connection.execute(sql, [nome]);
+      await connection.commit();
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    catch(error){
+      throw new Error("Não foi possivel buscar o municipio")
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+
+  }
+  
+  async checkIfUfIsAtived(codigoUf: number){
+    let connection;
+    try{
+      connection = await getConnection();
+      const sql = `SELECT STATUS FROM TB_UF WHERE CODIGO_UF = :codigo_uf`;
+      const result = await connection.execute(sql, [codigoUf]);
+      await connection.commit();
+      if(result.rows && result.rows.length > 0){
+        const status = result.rows[0] as number[];
+        return status[0] as number;
+      }
+      else{
+        return 0;
+      }
+    }
+    catch(error){
+      throw new Error("Não foi possivel verificar o status da UF")
+    }
+    finally{
+      if(connection){
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default MunicipioRepository;
