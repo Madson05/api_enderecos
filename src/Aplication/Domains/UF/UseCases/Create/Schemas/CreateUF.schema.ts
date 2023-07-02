@@ -11,8 +11,8 @@ export const CreateUFSchema = zod.object({
     .nonempty("O nome da UF não pode ser vazio"),
   status: zod
     .number()
-    .min(0, "O status da UF deve ser 0 ou 1")
-    .max(1, "O status da UF deve ser 0 ou 1"),
+    .min(0, "O status da UF deve ser 1 ou 2")
+    .max(1, "O status da UF deve ser 1 ou 2"),
 });
 
 export type CreateUFType = zod.infer<typeof CreateUFSchema>;
