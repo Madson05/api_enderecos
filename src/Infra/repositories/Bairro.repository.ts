@@ -153,6 +153,44 @@ class BairroRepository {
       }
     }
   };
+
+  async checkExistsByNome(nome: string, codigoMunicipio: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_BAIRRO WHERE UPPER(NOME) = UPPER(:nome) AND CODIGO_MUNICIPIO = :codigo_municipio`;
+      const result = await connection.execute(sql, [nome, codigoMunicipio]);
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+    }catch(error){
+      throw new Error("Não foi possivel buscar o bairro");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  async checkIfMunicipioIsAtived(codigoMunicipio: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_MUNICIPIO WHERE CODIGO_MUNICIPIO = :codigo_municipio AND status = 1`;
+      const result = await connection.execute(sql, [codigoMunicipio]);
+      if(result.rows && result.rows.length > 0){
+        return true;
+      }
+    }catch(error){
+      throw new Error("Não foi possivel buscar o municipio");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
 }
 
 export default BairroRepository;

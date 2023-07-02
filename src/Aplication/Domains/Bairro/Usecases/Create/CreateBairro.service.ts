@@ -9,6 +9,11 @@ class CreateBairroService {
 
   async execute(data: CreateBairroType): Promise<any> {
 
+    const checkExists = await this.bairroRepository.checkExistsByNome(data.nome, data.codigoMunicipio);
+    if(checkExists) throw new Error("Bairro já cadastrado");
+    const checkMunicipio = await this.bairroRepository.checkIfMunicipioIsAtived(data.codigoMunicipio);
+    if(!checkMunicipio) throw new Error("Municipio não encontrado ou inativo");
+
     const bairro = new BairroEntity(await getNextSequence("SEQUENCE_BAIRRO"), data.codigoMunicipio, data.nome, data.status);
 
     const result = await this.bairroRepository.create(bairro);
