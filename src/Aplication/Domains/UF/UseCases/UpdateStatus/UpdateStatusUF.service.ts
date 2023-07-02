@@ -9,10 +9,7 @@ class UpdateStatusUFService {
     if (!uf) {
       throw new Error("UF não encontrada");
     }
-
-    await this.ufRepository.UpdateStatus(codigoUF);
-
-    return uf;
+    return await this.ufRepository.UpdateStatus(codigoUF);
   }
 }
 

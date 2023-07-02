@@ -10,7 +10,7 @@ const routerUF = Router();
 routerUF.get("/", getUFController.handle)
 routerUF.post("/", createUFController.handle)
 routerUF.put("/", updateUFController.handle)
-routerUF.patch("/", updateStatusUFController.handle)
+routerUF.patch("/:codigoUF", updateStatusUFController.handle)
 routerUF.delete("/:codigoUF", deleteUFController.handle)
 
 export default routerUF;

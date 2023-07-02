@@ -132,7 +132,7 @@ class UFRepository {
         SELECT CODIGO_BAIRRO FROM TB_BAIRRO WHERE CODIGO_MUNICIPIO IN(
           SELECT CODIGO_MUNICIPIO FROM TB_MUNICIPIO WHERE CODIGO_UF = :codigoUF
         ))`;
-      await connection.execute(sqlEndereco, [status, codigoUF]);
+      await connection.execute(sqlEndereco, [codigoUF]);
 
       const sqlBairro = `UPDATE TB_BAIRRO SET status = :status WHERE CODIGO_MUNICIPIO IN(
         SELECT CODIGO_MUNICIPIO FROM TB_MUNICIPIO WHERE CODIGO_UF = :codigoUF
@@ -147,10 +147,8 @@ class UFRepository {
 
       await connection.commit();
       const result = await this.get("");
-      
+
       return result;
-    }catch(error){
-      throw new Error("Não foi possivel atualizar o status da UF");
     }finally{
       if(connection){
         await connection.close();
