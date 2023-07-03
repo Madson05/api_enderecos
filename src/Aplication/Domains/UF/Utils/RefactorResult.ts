@@ -20,4 +20,5 @@ export const refactorResult = (result: any, data?: GetUFType | undefined) => {
 
     return result;
   }
+  return result;
 }

@@ -317,6 +317,86 @@ class PessoaRepository {
     }
   }
 
+  public async checkExistsByLogin(login: string) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_PESSOA WHERE LOGIN = :login`;
+      const result = await connection.execute(sql, [login]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se a pessoa existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async checkExistsByCodigoPessoa(codigoPessoa: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_PESSOA WHERE CODIGO_PESSOA = :codigo_pessoa`;
+      const result = await connection.execute(sql, [codigoPessoa]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se a pessoa existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async checkIfBairroIsAtived(codigoBairro: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_BAIRRO WHERE CODIGO_BAIRRO = :codigo_bairro AND STATUS = 1`;
+      const result = await connection.execute(sql, [codigoBairro]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se o bairro existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
+  public async checkIfBairroExists(codigoBairro: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_BAIRRO WHERE CODIGO_BAIRRO = :codigo_bairro`;
+      const result = await connection.execute(sql, [codigoBairro]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se o bairro existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+  }
+
 }
 
 export default PessoaRepository;

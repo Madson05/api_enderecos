@@ -1,10 +1,9 @@
-import bcrypt from "bcrypt"
-import { SHA256 } from "crypto-js";
+
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
 import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
-import { CreateEnderecoType, CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
+import { CreateUsuarioType } from "./Schemas/CreatePessoa.schema";
 import { refactorResult } from "../../Utils/RefactorResult";
 
 class CreatePessoaService{
@@ -13,6 +12,20 @@ class CreatePessoaService{
     ){}
 
     execute = async (data: CreateUsuarioType): Promise<any> => {
+
+        const checkExists = await this.pessoaRepository.checkExistsByLogin(data.login);
+        
+        if(checkExists && checkExists.length > 0) throw new Error("Login já cadastrado");
+
+        for (const endereco in data.enderecos){
+            const checkIfBairroExists = await this.pessoaRepository.checkIfBairroExists(data.enderecos[endereco].codigoBairro);
+            if(checkIfBairroExists && checkIfBairroExists.length === 0) throw new Error("Bairro não encontrado");
+            const checkBairro = await this.pessoaRepository.checkIfBairroIsAtived(data.enderecos[endereco].codigoBairro);
+            if(checkBairro && checkBairro.length === 0) throw new Error("Bairro inativo");
+        }
+
+        
+        
         
         const codigoPessoa = await getNextSequence("SEQUENCE_PESSOA");
         const pessoa = new PessoaEntity(codigoPessoa, data.nome, data.sobrenome, data.idade, data.login, data.senha, data.status);

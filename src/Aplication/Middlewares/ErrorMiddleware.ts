@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 
 class errorMiddleware{
     public async handle(error: Error, req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-
+        console.log(error);
         if (error instanceof ZodError) {
             if((error.issues[0].code === "invalid_type") && (error.issues[0].message === "Required")){
                 return res.status(400).json({
