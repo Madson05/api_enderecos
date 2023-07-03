@@ -1,8 +1,8 @@
 import zod from "zod";
 
 export const GetBairroSchema = zod.object({
-  codigo_bairro: zod.string().optional(),
-  codigo_municipio: zod.string().optional(),
+  codigoBairro: zod.string().optional(),
+  codigoMunicipio: zod.string().optional(),
   nome: zod.string().optional(),
   status: zod.string().optional(),
 });

@@ -16,8 +16,18 @@ class Login {
       return response.status(404).send({ message: "Usuário não encontrado" });
     }
 
+    if(result && result.length === 0){
+      return response.status(404).send({ message: "Usuário não encontrado" });
+    }
 
-    const senhaValida = senha === result[0].senha;
+    
+
+    if (result[0].senha !== senha) {
+      return response.status(401).send({ message: "Senha inválida" });
+    }
+
+    const senhaValida = result[0].senha === senha;
+
 
     if (!senhaValida) {
       return response.status(401).send({ message: "Senha inválida" });

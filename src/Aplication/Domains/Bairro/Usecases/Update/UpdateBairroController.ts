@@ -12,7 +12,7 @@ class UpdatebairroController {
   ): Promise<any> => {
     try {
       const bairro = UpdateBairroSchema.parse(request.body);
-
+      
       response.send(await this.updateBairroService.execute(bairro));
     } catch (error) {
       next(error);

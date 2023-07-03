@@ -15,8 +15,11 @@ class CreateUFService {
         const UFExistsBySigla = await this.uFRepository.checkExistsBySigla(UF.getSigla());
         const UFExistsByNome = await this.uFRepository.checkExistsByNome(UF.getNome());
 
-        if (UFExistsBySigla || UFExistsByNome) {
-            throw new Error("UF já cadastrada");
+        if (UFExistsBySigla){
+            throw new Error("Já existe uma UF com essa sigla");
+        }
+        if (UFExistsByNome){
+            throw new Error("Já existe uma UF com esse nome");
         }
 
         const result = await this.uFRepository.create(UF);

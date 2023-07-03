@@ -20,6 +20,14 @@ export class GetMunicipioService {
           if (query !== "") {
             query += " AND ";
           }
+          if(item === "codigoMunicipio"){
+            query += `codigo_municipio='${data[item]}'`;
+            continue;
+          }
+          if(item === "codigoUF"){
+            query += `codigo_UF='${data[item]}'`;
+            continue;
+          }
           query += `UPPER(${item})=UPPER('${data[item]}')`;
         }
       }

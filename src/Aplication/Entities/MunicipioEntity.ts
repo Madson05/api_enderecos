@@ -1,22 +1,22 @@
 class MunicipioEntity{
   constructor(
-    private codigo_Municipio: number,
-    private codigo_UF: number,
+    private codigoMunicipio: number,
+    private codigoUF: number,
     private nome: string,
     private status: number
   ){
-    this.codigo_Municipio = codigo_Municipio;
-    this.codigo_UF = codigo_UF;
+    this.codigoMunicipio = codigoMunicipio;
+    this.codigoUF = codigoUF;
     this.nome = nome;
     this.status = status;
   }
 
   public getCodigoMunicipio(): number{
-    return this.codigo_Municipio;
+    return this.codigoMunicipio;
   }
 
   public getCodigoUF(): number{
-    return this.codigo_UF;
+    return this.codigoUF;
   }
 
   public getNome(): string{

@@ -89,16 +89,18 @@ class GetPessoaService {
               uf: {},
             };
           }
-
-          const codigoUF = pessoa.enderecos[0].bairro.municipio.codigoMunicipio;
+          console.log(pessoa.enderecos[0].bairro)
+          const codigoUF = pessoa.enderecos[0].bairro.municipio.codigoUF;
           const uf = await this.pessoaRepository.getUF(codigoUF);
-
+          console.log(uf)
           if (uf && uf.length > 0) {
+            console.log("oi")
             const dataUF = uf[0] as unknown[];
             pessoa.enderecos[item].bairro.municipio.uf = {
               codigoUF: String(dataUF[0]),
               nomeUF: String(dataUF[1]),
               siglaUF: String(dataUF[2]),
+              status: Number(dataUF[3]),
             };
           }
         }

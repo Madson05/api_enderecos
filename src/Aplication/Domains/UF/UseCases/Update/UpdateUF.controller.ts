@@ -7,9 +7,13 @@ class UpdateUFController{
   constructor(private readonly updateUFService: UpdateUFService) {}
 
   handle = async (request: Request, response: Response, next: NextFunction): Promise<any> => {
-    const UF: UpdateUFType = updateUFSchema.parse(request.body);
+    try{
+      const UF: UpdateUFType = updateUFSchema.parse(request.body);
 
     response.status(200).send(await this.updateUFService.execute(UF));
+    }catch(error){
+      next(error)
+    }
   }
 }
 

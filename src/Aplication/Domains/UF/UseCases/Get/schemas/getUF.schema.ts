@@ -1,7 +1,7 @@
 import zod from "zod";
 
 export const GetUFSchema = zod.object({
-  codigo_UF: zod
+  codigoUF: zod
     .string()
     .max(9, "O codigo da UF deve ter no maximo 9 caracteres")
     .optional(),

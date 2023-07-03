@@ -19,6 +19,10 @@ class GetUFService {
           if (query !== "") {
             query += " AND ";
           }
+          if(item === "codigoUF"){
+            query += `codigo_UF='${data[item]}'`;
+            continue;
+          }
           query += `UPPER(${item})=UPPER('${data[item]}')`;
         }
       }

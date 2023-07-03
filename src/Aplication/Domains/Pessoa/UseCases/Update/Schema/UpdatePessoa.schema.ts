@@ -1,7 +1,7 @@
 import zod from "zod";
 
 export const updateEnderecoSchema = zod.object({
-  codigoEndereco: zod.number().min(1, "O codigo do endereco deve ser maior que 0").max(999999999, "O codigo do endereco deve ser menor que 999999999"),
+  codigoEndereco: zod.number().min(1, "O codigo do endereco deve ser maior que 0").max(999999999, "O codigo do endereco deve ser menor que 999999999").optional(),
   codigoPessoa: zod.number().min(1, "O codigo da pessoa deve ser maior que 0").max(999999999, "O codigo da pessoa deve ser menor que 999999999"),
   codigoBairro: zod.number().min(1, "O codigo do bairro deve ser maior que 0").max(999999999, "O codigo do bairro deve ser menor que 999999999"),
   nomeRua: zod.string().max(256, "O nome da rua deve ter no maximo 256 caracteres").nonempty("O nome da rua não pode ser vazio"),

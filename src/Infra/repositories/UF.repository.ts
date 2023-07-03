@@ -57,7 +57,7 @@ class UFRepository {
       connection = await getConnection();
       const sql = `UPDATE TB_UF SET sigla = :sigla, nome = :nome, status = :status WHERE codigo_UF = :codigoUF`;
       await connection.execute(sql, {
-        codigoUF: UF.codigo_UF,
+        codigoUF: UF.codigoUF,
         sigla: UF.sigla,
         nome: UF.nome,
         status: UF.status,

@@ -182,7 +182,7 @@ class PessoaRepository {
     }
   }
 
-  public async update(pessoa: PessoaEntity, enderecos: EnderecoEntity[]) {
+  public async update(pessoa: PessoaEntity, enderecos: EnderecoEntity[], listaEnderecos: number[]) {
     let connection;
     try {
       connection = await getConnection();
@@ -229,12 +229,20 @@ class PessoaRepository {
         ]);
       }
 
+      const query = listaEnderecos.map((item) => {
+        return `'${item}'`;
+      });
+
+      const sqlDelete = `DELETE FROM TB_ENDERECO WHERE CODIGO_ENDERECO NOT IN (${query}) AND CODIGO_PESSOA = :codigo_pessoa`;
+      await connection.execute(sqlDelete, [pessoa.getCodigoPessoa()]);
+
       await connection.commit();
       return await this.get("");
     } catch (error) {
       if (connection) {
         await connection.rollback();
       }
+      console.log(error)
       throw new Error("Não foi possivel atualizar a pessoa");
     } finally {
       if (connection) {
@@ -389,6 +397,27 @@ class PessoaRepository {
         await connection.rollback();
       }
       throw new Error("Não foi possivel verificar se o bairro existe");
+    }
+     finally {
+      if (connection) {
+        await connection.close();
+      }
+    }
+    
+  }
+
+  public async checkIfEnderecoExists(codigoEndereco: number) {
+    let connection;
+    try {
+      connection = await getConnection();
+      const sql = `SELECT * FROM TB_ENDERECO WHERE CODIGO_ENDERECO = :codigo_endereco`;
+      const result = await connection.execute(sql, [codigoEndereco]);
+      return result.rows;
+    }catch(error){
+      if(connection){
+        await connection.rollback();
+      }
+      throw new Error("Não foi possivel verificar se o endereço existe");
     }
      finally {
       if (connection) {

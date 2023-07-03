@@ -18,5 +18,6 @@ export const refactorResult = (result: any, data?: GetPessoaType) => {
     }
     return result;
   }
+  return result;
 
 }

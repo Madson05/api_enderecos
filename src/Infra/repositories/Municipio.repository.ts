@@ -16,6 +16,7 @@ class MunicipioRepository{
       return result.rows;
     
     }catch(error){
+      
       throw new Error("Não foi possivel buscar os municipios")
     }
     finally{
@@ -178,7 +179,7 @@ class MunicipioRepository{
     try{
       connection = await getConnection();
       const sql = `SELECT * FROM TB_MUNICIPIO WHERE UPPER(NOME) = UPPER(:nome) AND CODIGO_UF = :codigo_uf`;
-      const result = await connection.execute(sql, [nome]);
+      const result = await connection.execute(sql, [nome, codigoUF]);
       await connection.commit();
       if(result.rows && result.rows.length > 0){
         return true;
@@ -188,6 +189,7 @@ class MunicipioRepository{
       }
     }
     catch(error){
+      console.log(error)
       throw new Error("Não foi possivel buscar o municipio")
     }
     finally{

@@ -1,4 +1,5 @@
 import PessoaRepository from "../../../../../Infra/repositories/Pessoa.repository";
+import getNextSequence from "../../../../../Infra/repositories/getNextSequence";
 import EnderecoEntity from "../../../../Entities/EnderecoEntity";
 import PessoaEntity from "../../../../Entities/PessoaEntity";
 import { refactorResult } from "../../Utils/RefactorResult";
@@ -8,10 +9,11 @@ class UpdatePessoaService {
   constructor(private pessoaRepository: PessoaRepository) {}
 
   async execute(data: UpdatePessoaType): Promise<any> {
+    const listaEnderecos = []
     const codigoPessoa = data.codigoPessoa;
-    const checkExists = await this.pessoaRepository.checkExistsByLogin(
-      data.login
-    );
+    
+
+    
 
     const dataPessoa = await this.pessoaRepository.get(`codigo_pessoa = '${codigoPessoa}'`);
     if (dataPessoa && dataPessoa.length === 0)
@@ -44,7 +46,7 @@ class UpdatePessoaService {
     const enderecos: EnderecoEntity[] = [];
 
     for (let item of data.enderecos) {
-      const codigoEndereco = item.codigoEndereco;
+      const codigoEndereco = item.codigoEndereco? item.codigoEndereco : await getNextSequence("SEQUENCE_ENDERECO");
       const endereco = new EnderecoEntity(
         codigoEndereco,
         codigoPessoa,
@@ -54,9 +56,10 @@ class UpdatePessoaService {
         item.complemento,
         item.cep
       );
+      listaEnderecos.push(codigoEndereco);
       enderecos.push(endereco);
     }
-    const result = await this.pessoaRepository.update(pessoa, enderecos);
+    const result = await this.pessoaRepository.update(pessoa, enderecos, listaEnderecos);
     return refactorResult(result);
   }
 }

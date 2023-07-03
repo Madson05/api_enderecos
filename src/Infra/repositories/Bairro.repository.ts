@@ -120,10 +120,11 @@ class BairroRepository {
       const sqlEndereco = `DELETE FROM TB_ENDERECO WHERE CODIGO_BAIRRO = :codigo_bairro`;
       await connection.execute(sqlEndereco, [codigoBairro]);
       const sql = `UPDATE TB_BAIRRO SET status = :status WHERE CODIGO_BAIRRO = :codigo_bairro`;
-      await connection.execute(sql, [status, ]);
+      await connection.execute(sql, [status, codigoBairro ]);
       await connection.commit();
       return await this.get("");
     } catch (error) {
+      console.log(error);
       throw new Error("Não foi possivel atualizar o status do bairro");
     } finally {
       if (connection) {

@@ -12,6 +12,7 @@ class GetBairroService{
   async execute(data: GetBairroTypeService): Promise<any> {
     let query = "";
     
+    
     for (const item in data) {
       
       if (data.hasOwnProperty(item)) {
@@ -19,6 +20,14 @@ class GetBairroService{
         if (item !== undefined) {
           if (query !== "") {
             query += " AND ";
+          }
+          if(item === "codigoBairro"){
+            query += `codigo_bairro='${data[item]}'`;
+            continue;
+          }
+          if(item === "codigoMunicipio"){
+            query += `codigo_municipio='${data[item]}'`;
+            continue;
           }
           query += `UPPER(${item})=UPPER('${data[item]}')`;
         }
